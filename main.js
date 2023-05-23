@@ -1,6 +1,7 @@
 // main.js: Planet generation.
 
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -40,6 +41,12 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 // Append to the document.
 document.body.appendChild(renderer.domElement);
 
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 0, 0); // centre the scene
+controls.dampingFactor = 0.05;
+controls.enableDamping = true; // inertia!
+
+
 // Sunlight properties.
 const sunLight = new THREE.DirectionalLight(new THREE.Color("#ffffff"), 3.5);
 sunLight.position.set(10, 20, 10); // Position on top right-hand side of the screen.
@@ -66,6 +73,7 @@ scene.add(sphere);
 // Animation loop as an asynchronous function.
 (async function () {
   renderer.setAnimationLoop(() => {
+    controls.update();
     renderer.render(scene, camera);
   });
 })();

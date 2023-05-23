@@ -46,7 +46,6 @@ controls.target.set(0, 0, 0); // centre the scene
 controls.dampingFactor = 0.05;
 controls.enableDamping = true; // inertia!
 
-
 // Sunlight properties.
 const sunLight = new THREE.DirectionalLight(new THREE.Color("#ffffff"), 3.5);
 sunLight.position.set(10, 20, 10); // Position on top right-hand side of the screen.
@@ -61,17 +60,16 @@ sunLight.shadow.camera.top = 10;
 sunLight.shadow.camera.right = 10;
 scene.add(sunLight);
 
-// Render a sphere.
-let sphere = new THREE.Mesh(
-  new THREE.SphereGeometry(10, 70, 70),
-  new THREE.MeshPhysicalMaterial({})
-);
-
-sphere.receiveShadow = true;
-scene.add(sphere);
-
 // Animation loop as an asynchronous function.
 (async function () {
+  // Render a sphere.
+  let sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(10, 70, 70),
+    new THREE.MeshPhysicalMaterial({})
+  );
+  sphere.receiveShadow = true;
+  scene.add(sphere);
+
   renderer.setAnimationLoop(() => {
     controls.update();
     renderer.render(scene, camera);

@@ -2,6 +2,7 @@
 
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -62,10 +63,39 @@ scene.add(sunLight);
 
 // Animation loop as an asynchronous function.
 (async function () {
+  let pmrem = new THREE.PMREMGenerator(renderer);
+  let envmapTexture = await new RGBELoader()
+    .setDataType(THREE.FloatType)
+    .loadAsync("assets/hdri/abandoned_construction_4k.hdr");
+  let envMap = pmrem.fromEquirectangular(envmapTexture).texture;
+
+  let textures = {
+    bump: await new THREE.TextureLoader().loadAsync(
+      "assets/images/earthbump.jpg"
+    ),
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/earthmap.jpg"
+    ),
+    spec: await new THREE.TextureLoader().loadAsync(
+      "assets/images/earthspec.jpg"
+    ),
+  };
+
   // Render a sphere.
   let sphere = new THREE.Mesh(
     new THREE.SphereGeometry(10, 70, 70),
-    new THREE.MeshPhysicalMaterial({})
+    new THREE.MeshPhysicalMaterial({
+      map: textures.map, // sphere base colour
+      roughnessMap: textures.spec, // roughness of sphere texture
+      bumpMap: textures.bump, // make texture surface uneven
+      bumpScale: 0.07, // size of the bumps
+      envMap, // environmental map on sphere material
+      envMapIntensity: 1.0, // environmental map effect strength
+      sheen: 1.4,
+      sheenRoughness: 0.8,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.5,
+    })
   );
   sphere.receiveShadow = true;
   scene.add(sphere);

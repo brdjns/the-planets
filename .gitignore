@@ -1,0 +1,10 @@
+# .gitignore: Ignore unwanted files.
+
+# WSL stuff.
+*.Identifier
+
+# Backup files.
+*~
+
+# VSCode stuff.
+.vscode/*

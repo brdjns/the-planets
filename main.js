@@ -3,6 +3,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -79,7 +80,15 @@ scene.add(sunLight);
     spec: await new THREE.TextureLoader().loadAsync(
       "assets/images/earthspec.jpg"
     ),
+    planeTrailMask: await new THREE.TextureLoader().loadAsync(
+      "assets/images/mask.png"
+    ),
   };
+
+  // Select fire mesh of our plane.
+  let plane = (await new GLTFLoader().loadAsync("assets/glb/plane.glb")).scene
+    .children[0];
+  let planesData = [makePlane(plane, textures.planeTrailMask, envMap, scene)];
 
   // Render a sphere.
   let sphere = new THREE.Mesh(
@@ -97,11 +106,64 @@ scene.add(sunLight);
       clearcoat: 0.5,
     })
   );
+  sphere.rotation.y += Math.PI * 3.38; // rotate to Africa
   sphere.receiveShadow = true;
   scene.add(sphere);
 
   renderer.setAnimationLoop(() => {
+    // Reset the position + rotation of every group every time we rerender the
+    // scene.
+    planesData.forEach((planeData) => {
+      let plane = planeData.group;
+
+      plane.position.set(0, 0, 0);
+      plane.rotation.set(0, 0, 0);
+      plane.updateMatrixWorld();
+
+      // Translate plane on Y axis.
+      plane.translateY(planeData.yOff);
+
+      // Rotate plane 90 degrees.
+      plane.rotateOnAxis(new THREE.Vector3(1, 0, 0), +Math.PI * 0.5);
+    });
+
     controls.update();
     renderer.render(scene, camera);
   });
 })();
+
+// Make a plane.
+function makePlane(planeMesh, trailTexture, envMap, scene) {
+  let plane = planeMesh.clone(); // clone plane mesh
+  plane.scale.set(0.001, 0.001, 0.001); // scale mesh down to manageable size
+
+  // Reset default rotation and position for model.
+  plane.position.set(0, 0, 0);
+  plane.rotation.set(0, 0, 0);
+  plane.updateMatrixWorld();
+
+  // Apply shadows + environmental map to every child mesh in the model.
+  plane.traverse((object) => {
+    if (object instanceof THREE.Mesh) {
+      object.material.envMap = envMap;
+      object.castShadow = true;
+      object.receiveShadow = true;
+    }
+  });
+
+  // Group multiple meshes together.
+  let group = new THREE.Group();
+
+  // Add the plane to the group.
+  group.add(plane);
+
+  // Add the group to the scene.
+  scene.add(group);
+
+  // Translate the plane from the centre of the scene. We translate it within
+  // the Y axis. The returned object gets stored in the planesData array.
+  return {
+    group,
+    yOff: 10.5 + Math.random() * 1.0,
+  };
+}

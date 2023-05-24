@@ -110,7 +110,12 @@ scene.add(sunLight);
   sphere.receiveShadow = true;
   scene.add(sphere);
 
+  let clock = new THREE.Clock();
+
   renderer.setAnimationLoop(() => {
+    // Elapsed time since the last frame.
+    let delta = clock.getDelta();
+
     // Reset the position + rotation of every group every time we rerender the
     // scene.
     planesData.forEach((planeData) => {
@@ -120,10 +125,24 @@ scene.add(sunLight);
       plane.rotation.set(0, 0, 0);
       plane.updateMatrixWorld();
 
+      //
+      // The following statements read bottom to top.
+      //
+
+      // How much we've rotated the plane.
+      planeData.rot += delta * 0.25;
+
+      // Rotate plane along Y axis by rotation amount (0.0).
+      plane.rotateOnAxis(new THREE.Vector3(0, 1, 0), planeData.rot);
+
+      // Rotate plane along Z axis by radius amount (0.5).
+      plane.rotateOnAxis(new THREE.Vector3(0, 0, 1), planeData.rad);
+
       // Translate plane on Y axis.
       plane.translateY(planeData.yOff);
 
-      // Rotate plane 90 degrees.
+      // Rotate plane 90 degrees to compensate for it pointing downwards after
+      // applying position and rotation above.
       plane.rotateOnAxis(new THREE.Vector3(1, 0, 0), +Math.PI * 0.5);
     });
 
@@ -164,6 +183,8 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
   // the Y axis. The returned object gets stored in the planesData array.
   return {
     group,
+    rot: 0, // how much we've rotated plane
+    rad: 0.5, // radius
     yOff: 10.5 + Math.random() * 1.0,
   };
 }

@@ -23,6 +23,19 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(0, 15, 50);
 
 //
+// Rings
+//
+
+const ringScene = new THREE.Scene();
+const ringsCamera = new THREE.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
+ringsCamera.position.set(0, 0, 50);
+
+//
 // Audio
 //
 
@@ -95,6 +108,17 @@ sunLight.shadow.camera.top = 10;
 sunLight.shadow.camera.right = 10;
 scene.add(sunLight);
 
+let mousePos = new THREE.Vector2(0, 0);
+
+// Zero X and Y coördinates when the mouse is centred on the screen.
+window.addEventListener("mousemove", (e) => {
+  let x = e.clientX - window.innerWidth * 0.5;
+  let y = e.clientY - window.innerHeight * 0.5;
+
+  mousePos.x = x * 0.0003;
+  mousePos.y = y * 0.0003;
+});
+
 // Animation loop as an asynchronous function.
 (async function () {
   let pmrem = new THREE.PMREMGenerator(renderer);
@@ -102,6 +126,47 @@ scene.add(sunLight);
     .setDataType(THREE.FloatType)
     .loadAsync("assets/hdri/abandoned_construction_4k.hdr");
   let envMap = pmrem.fromEquirectangular(envmapTexture).texture;
+
+  // Rings.
+  const ring1 = new THREE.Mesh(
+    new THREE.RingGeometry(15, 13.5, 80, 1, 0),
+    new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color("#ffcb8e")
+        .convertSRGBToLinear()
+        .multiplyScalar(200),
+      roughness: 0.25,
+      envMap,
+      envMapIntensity: 1.8,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.35,
+    })
+  );
+  ringScene.add(ring1);
+
+  const ring2 = new THREE.Mesh(
+    new THREE.RingGeometry(16.5, 15.75, 80, 1, 0),
+    new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color("#ffcb8e").convertSRGBToLinear(),
+      transparent: true,
+      opacity: 0.5,
+      side: THREE.DoubleSide,
+    })
+  );
+  ringScene.add(ring2);
+
+  const ring3 = new THREE.Mesh(
+    new THREE.RingGeometry(18, 17.75, 80),
+    new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color("#ffcb8e")
+        .convertSRGBToLinear()
+        .multiplyScalar(50),
+      transparent: true,
+      opacity: 0.5,
+      side: THREE.DoubleSide,
+    })
+  );
+  ringScene.add(ring3);
 
   let textures = {
     bump: await new THREE.TextureLoader().loadAsync(
@@ -188,6 +253,25 @@ scene.add(sunLight);
 
     controls.update();
     renderer.render(scene, camera);
+
+    // Rotate each ring by a value that depends on the mouse position.
+    // Take 95% of the previous value stored in 'x' and add 5% of mouse
+    // position along the Y axis.
+    // The rightmost value dictates strength of rotation (bigger number: more rotation).
+
+    ring1.rotation.x = ring1.rotation.x * 0.95 + mousePos.y * 0.05 * 1.2;
+    ring1.rotation.y = ring1.rotation.y * 0.95 + mousePos.x * 0.05 * 1.2;
+
+    ring2.rotation.x = ring2.rotation.x * 0.95 + mousePos.y * 0.05 * 0.375;
+    ring2.rotation.y = ring2.rotation.y * 0.95 + mousePos.x * 0.05 * 0.375;
+
+    // Rotate this ring in the opposite direction to the others.
+    ring3.rotation.x = ring3.rotation.x * 0.95 - mousePos.y * 0.05 * 0.275;
+    ring3.rotation.y = ring3.rotation.y * 0.95 - mousePos.x * 0.05 * 0.275;
+
+    renderer.autoClear = false; // don't clear screen before next render
+    renderer.render(ringScene, ringsCamera);
+    renderer.autoClear = true;
   });
 })();
 
@@ -223,7 +307,7 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
 
       transparent: true,
       opacity: 1,
-      alphaMap: trailTexture // controls a trail's pixel opacity
+      alphaMap: trailTexture, // controls a trail's pixel opacity
     })
   );
 

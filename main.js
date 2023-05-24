@@ -188,7 +188,15 @@ window.addEventListener("mousemove", (e) => {
     .children[0];
   let planesData = [
     makePlane(plane, textures.planeTrailMask, envMap, scene),
-    /*makePlane(plane, textures.planeTrailMask, envMap, scene),*/
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
   ];
 
   // Render a sphere.

@@ -26,6 +26,18 @@ camera.position.set(0, 15, 50);
 // Audio
 //
 
+// Get around modern browsers refusing to autoplay sound.
+// This works in Edge but not in Firefox (which no-one but me uses, anyway).
+let context = undefined;
+const div = document.querySelector(".sun-background");
+window.onload = () => {
+  context = new AudioContext();
+};
+
+div.addEventListener("mouseover", () => {
+  context.resume().then(() => {});
+});
+
 const listener = new THREE.AudioListener(); // listen for all scene audio
 camera.add(listener);
 const sound = new THREE.Audio(listener); // create sound source
@@ -111,7 +123,7 @@ scene.add(sunLight);
     .children[0];
   let planesData = [
     makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    //makePlane(plane, textures.planeTrailMask, envMap, scene),
   ];
 
   // Render a sphere.
@@ -154,7 +166,8 @@ scene.add(sunLight);
       //
 
       // How much we've rotated the plane.
-      planeData.rot += delta * 0.25;
+      // planeData.rot += delta * 0.25;
+      planeData.rot += delta * 0; // freeze plane
 
       // Rotate plane along a random axis by a random rotation.
       plane.rotateOnAxis(planeData.randomAxis, planeData.randomAxisRot);
@@ -197,11 +210,31 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
     }
   });
 
+  // Add trail mesh.
+  let trail = new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 2),
+    new THREE.MeshPhysicalMaterial({
+      envMap,
+      envMapIntensity: 3,
+
+      roughness: 0.4,
+      metalness: 0,
+      transmission: 1,
+
+      transparent: true,
+      opacity: 1,
+      alphaMap: trailTexture // controls a trail's pixel opacity
+    })
+  );
+
   // Group multiple meshes together.
   let group = new THREE.Group();
 
   // Add the plane to the group.
   group.add(plane);
+
+  // Add the trail to the group.
+  group.add(trail);
 
   // Add the group to the scene.
   scene.add(group);
@@ -215,7 +248,8 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
     rad: Math.random() * Math.PI * 0.45 + MINIMUM_RADIUS,
     yOff: Math.random() * 1.0 + 10.5,
     randomAxis: new THREE.Vector3(nr(), nr()).normalize(), // normalisation sets vector length to 1
-    randomAxisRot: Math.random() * Math.PI * 2,
+    randomAxisRot: 0,
+    //randomAxisRot: Math.random() * Math.PI * 2,
   };
 }
 
@@ -224,15 +258,3 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
 function nr() {
   return Math.random() * 2 - 1;
 }
-
-// Get around modern browsers refusing to autoplay sound.
-// This works in Edge but not in Firefox (which no-one but me uses, anyway).
-let context = undefined;
-const div = document.querySelector(".sun-background");
-window.onload = () => {
-  context = new AudioContext();
-};
-
-div.addEventListener("mouseover", () => {
-  context.resume().then(() => {});
-});

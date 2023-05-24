@@ -146,7 +146,7 @@ window.addEventListener("mousemove", (e) => {
 
   const ring2 = new THREE.Mesh(
     new THREE.RingGeometry(16.5, 15.75, 80, 1, 0),
-    new THREE.MeshPhysicalMaterial({
+    new THREE.MeshBasicMaterial({
       color: new THREE.Color("#ffcb8e").convertSRGBToLinear(),
       transparent: true,
       opacity: 0.5,
@@ -157,7 +157,7 @@ window.addEventListener("mousemove", (e) => {
 
   const ring3 = new THREE.Mesh(
     new THREE.RingGeometry(18, 17.75, 80),
-    new THREE.MeshPhysicalMaterial({
+    new THREE.MeshBasicMaterial({
       color: new THREE.Color("#ffcb8e")
         .convertSRGBToLinear()
         .multiplyScalar(50),

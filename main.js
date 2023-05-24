@@ -5,6 +5,9 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
+// Constants.
+const MINIMUM_RADIUS = 0.2;
+
 // Create a new scene.
 const scene = new THREE.Scene();
 
@@ -132,10 +135,13 @@ scene.add(sunLight);
       // How much we've rotated the plane.
       planeData.rot += delta * 0.25;
 
-      // Rotate plane along Y axis by rotation amount (0.0).
+      // Rotate plane along a random axis by a random rotation.
+      plane.rotateOnAxis(planeData.randomAxis, planeData.randomAxisRot);
+
+      // Rotate plane along the Y axis by rotation amount.
       plane.rotateOnAxis(new THREE.Vector3(0, 1, 0), planeData.rot);
 
-      // Rotate plane along Z axis by radius amount (0.5).
+      // Rotate plane along the Z axis by radius amount.
       plane.rotateOnAxis(new THREE.Vector3(0, 0, 1), planeData.rad);
 
       // Translate plane on Y axis.
@@ -183,8 +189,17 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
   // the Y axis. The returned object gets stored in the planesData array.
   return {
     group,
-    rot: 0, // how much we've rotated plane
-    rad: 0.5, // radius
-    yOff: 10.5 + Math.random() * 1.0,
+    // Set rotation between 0°-360°: 2πr circum. of a circle).
+    rot: Math.random() * Math.PI * 2.0,
+    rad: Math.random() * Math.PI * 0.45 + MINIMUM_RADIUS,
+    yOff: Math.random() * 1.0 + 10.5,
+    randomAxis: new THREE.Vector3(nr(), nr()).normalize(), // normalisation sets vector length to 1
+    randomAxisRot: Math.random() * Math.PI * 2,
   };
+}
+
+// Choose a random axis.
+// Return a random number in the range -1:1.
+function nr() {
+  return Math.random() * 2 - 1;
 }

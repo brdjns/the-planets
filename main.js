@@ -123,7 +123,7 @@ scene.add(sunLight);
     .children[0];
   let planesData = [
     makePlane(plane, textures.planeTrailMask, envMap, scene),
-    //makePlane(plane, textures.planeTrailMask, envMap, scene),
+    /*makePlane(plane, textures.planeTrailMask, envMap, scene),*/
   ];
 
   // Render a sphere.
@@ -166,8 +166,8 @@ scene.add(sunLight);
       //
 
       // How much we've rotated the plane.
-      // planeData.rot += delta * 0.25;
-      planeData.rot += delta * 0; // freeze plane
+      planeData.rot += delta * 0.25;
+      /*planeData.rot += delta * 0; // freeze plane*/
 
       // Rotate plane along a random axis by a random rotation.
       plane.rotateOnAxis(planeData.randomAxis, planeData.randomAxisRot);
@@ -227,6 +227,9 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
     })
   );
 
+  trail.rotateX(Math.PI);
+  trail.translateY(1.1);
+
   // Group multiple meshes together.
   let group = new THREE.Group();
 
@@ -248,8 +251,8 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
     rad: Math.random() * Math.PI * 0.45 + MINIMUM_RADIUS,
     yOff: Math.random() * 1.0 + 10.5,
     randomAxis: new THREE.Vector3(nr(), nr()).normalize(), // normalisation sets vector length to 1
-    randomAxisRot: 0,
-    //randomAxisRot: Math.random() * Math.PI * 2,
+    /*randomAxisRot: 0,*/
+    randomAxisRot: Math.random() * Math.PI * 2,
   };
 }
 

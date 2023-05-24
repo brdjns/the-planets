@@ -47,7 +47,7 @@ window.onload = () => {
   context = new AudioContext();
 };
 
-div.addEventListener("mouseover", () => {
+div.addEventListener("mousemove", () => {
   context.resume().then(() => {});
 });
 

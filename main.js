@@ -22,6 +22,24 @@ const camera = new THREE.PerspectiveCamera(
 // Move the camera above and farther way from the screen's centre.
 camera.position.set(0, 15, 50);
 
+//
+// Audio
+//
+
+const listener = new THREE.AudioListener(); // listen for all scene audio
+camera.add(listener);
+const sound = new THREE.Audio(listener); // create sound source
+scene.add(sound);
+const loader = new THREE.AudioLoader(); // load all sound files
+
+// Load the plane sound.
+loader.load("assets/audio/prop_plane.mp3", (buffer) => {
+  sound.setBuffer(buffer); // set source to sound object's buffer
+  sound.setVolume(1); // set the volume (range is 0:1)
+  sound.setLoop(true); // always loop
+  sound.play();
+});
+
 // Set the renderer we wish to use.
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
@@ -203,3 +221,15 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
 function nr() {
   return Math.random() * 2 - 1;
 }
+
+// Get around modern browsers refusing to autoplay sound.
+// This works in Edge but not in Firefox (which no-one but me uses, anyway).
+let context;
+const div = document.querySelector(".sun-background");
+window.onload = () => {
+  context = new AudioContext();
+};
+
+div.addEventListener("mouseover", () => {
+  context.resume().then(() => {});
+});

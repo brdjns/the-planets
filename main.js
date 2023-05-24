@@ -109,7 +109,10 @@ scene.add(sunLight);
   // Select fire mesh of our plane.
   let plane = (await new GLTFLoader().loadAsync("assets/glb/plane.glb")).scene
     .children[0];
-  let planesData = [makePlane(plane, textures.planeTrailMask, envMap, scene)];
+  let planesData = [
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, textures.planeTrailMask, envMap, scene),
+  ];
 
   // Render a sphere.
   let sphere = new THREE.Mesh(

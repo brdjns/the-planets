@@ -6,7 +6,8 @@ import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 // Constants.
-const MINIMUM_RADIUS = 0.2;
+const MINIMUM_RADIUS = 0.2; // minimum radius for a plane to circle
+const ROTATIONAL_SPEED = 0.001; // speed of planetary axial rotation
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -224,6 +225,9 @@ window.addEventListener("mousemove", (e) => {
   renderer.setAnimationLoop(() => {
     // Elapsed time since the last frame.
     let delta = clock.getDelta();
+
+    // Rotate the planet on its axis.
+    sphere.rotation.y -= ROTATIONAL_SPEED;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

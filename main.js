@@ -224,7 +224,7 @@ function nr() {
 
 // Get around modern browsers refusing to autoplay sound.
 // This works in Edge but not in Firefox (which no-one but me uses, anyway).
-let context;
+let context = undefined;
 const div = document.querySelector(".sun-background");
 window.onload = () => {
   context = new AudioContext();

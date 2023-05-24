@@ -219,8 +219,6 @@ window.addEventListener("mousemove", (e) => {
 
   // Give the planet axial tilt.
   sphere.rotation.y += Math.PI * 3.38; // rotate to Africa
-  sphere.rotation.x += 0.1;
-  sphere.rotation.z += 0.5;
 
   sphere.receiveShadow = true;
   scene.add(sphere);
@@ -231,7 +229,7 @@ window.addEventListener("mousemove", (e) => {
     // Elapsed time since the last frame.
     let delta = clock.getDelta();
 
-    // Rotate the planet on its axis.
+    // Rotate the planet counterclockwise on its axis.
     sphere.rotation.y += ROTATIONAL_SPEED;
 
     // Reset the position + rotation of every group every time we rerender the

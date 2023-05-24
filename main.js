@@ -7,7 +7,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 // Constants.
 const MINIMUM_RADIUS = 0.2; // minimum radius for a plane to circle
-const ROTATIONAL_SPEED = 0.001; // speed of planetary axial rotation
+const ROTATIONAL_SPEED = 0.002; // speed of planetary axial rotation
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -216,7 +216,12 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.5,
     })
   );
+
+  // Give the planet axial tilt.
   sphere.rotation.y += Math.PI * 3.38; // rotate to Africa
+  sphere.rotation.x += 0.1;
+  sphere.rotation.z += 0.5;
+
   sphere.receiveShadow = true;
   scene.add(sphere);
 
@@ -227,7 +232,7 @@ window.addEventListener("mousemove", (e) => {
     let delta = clock.getDelta();
 
     // Rotate the planet on its axis.
-    sphere.rotation.y -= ROTATIONAL_SPEED;
+    sphere.rotation.y += ROTATIONAL_SPEED;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

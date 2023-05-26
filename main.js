@@ -1,4 +1,5 @@
 // main.js: Planet generation.
+// SPDX-License-Identifier: MIT
 
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";

@@ -1,7 +1,7 @@
 # To Do
 
 * Get rid of magic constants, especially for hex colour codes
-* Add a licence
+* ~~Add a licence~~
 * Flesh out the README
 * Add sound effects for each plane
 * Add background music

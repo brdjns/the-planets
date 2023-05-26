@@ -247,20 +247,20 @@ window.addEventListener("mousemove", (e) => {
       //
 
       // How much we've rotated the plane.
-      planeData.rot += delta * 0.25;
+      planeData.rotation += delta * 0.25;
       /*planeData.rot += delta * 0; // freeze plane*/
 
       // Rotate plane along a random axis by a random rotation.
       plane.rotateOnAxis(planeData.randomAxis, planeData.randomAxisRot);
 
       // Rotate plane along the Y axis by rotation amount.
-      plane.rotateOnAxis(new THREE.Vector3(0, 1, 0), planeData.rot);
+      plane.rotateOnAxis(new THREE.Vector3(0, 1, 0), planeData.rotation);
 
       // Rotate plane along the Z axis by radius amount.
-      plane.rotateOnAxis(new THREE.Vector3(0, 0, 1), planeData.rad);
+      plane.rotateOnAxis(new THREE.Vector3(0, 0, 1), planeData.radius);
 
       // Translate plane on Y axis.
-      plane.translateY(planeData.yOff);
+      plane.translateY(planeData.yOffset);
 
       // Rotate plane 90 degrees to compensate for it pointing downwards after
       // applying position and rotation above.
@@ -396,10 +396,11 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
   return {
     group,
     // Set rotation between 0°-360°: 2πr circum. of a circle).
-    rot: Math.random() * Math.PI * 2.0,
-    rad: Math.random() * Math.PI * 0.45 + MINIMUM_RADIUS,
-    yOff: Math.random() * 1.0 + 10.5,
-    randomAxis: new THREE.Vector3(nr(), nr()).normalize(), // normalisation sets vector length to 1
+    rotation: Math.random() * Math.PI * 2.0,
+    radius: Math.random() * Math.PI * 0.45 + MINIMUM_RADIUS,
+    yOffset: Math.random() * 1.0 + 10.5,
+    // normalisation sets vector length to 1
+    randomAxis: new THREE.Vector3(randomize(), randomize()).normalize(),
     /*randomAxisRot: 0,*/
     randomAxisRot: Math.random() * Math.PI * 2,
   };
@@ -407,6 +408,6 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
 
 // Choose a random axis.
 // Return a random number in the range -1:1.
-function nr() {
+function randomize() {
   return Math.random() * 2 - 1;
 }

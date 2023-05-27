@@ -30,12 +30,12 @@ camera.position.set(0, 15, 50);
 
 const ringScene = new THREE.Scene();
 const ringsCamera = new THREE.PerspectiveCamera(
-  45,
+  50,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
-ringsCamera.position.set(0, 0, 50);
+ringsCamera.position.set(0, 0, 20);
 
 //
 // Audio
@@ -91,6 +91,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 // Append to the document.
 document.body.appendChild(renderer.domElement);
 
+// Add controls.
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 0, 0); // centre the scene
 controls.dampingFactor = 0.05;

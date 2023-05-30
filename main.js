@@ -224,6 +224,10 @@ window.addEventListener("mousemove", (e) => {
   ring3.moonOpacity = 0.03;
   ringScene.add(ring3);
 
+  //
+  // Planetary textures.
+  //
+
   let earthTextures = {
     bump: await new THREE.TextureLoader().loadAsync(
       "assets/images/earthbump.jpg"
@@ -236,6 +240,15 @@ window.addEventListener("mousemove", (e) => {
     ),
     planeTrailMask: await new THREE.TextureLoader().loadAsync(
       "assets/images/mask.png"
+    ),
+  };
+
+  let moonTextures = {
+    bump: await new THREE.TextureLoader().loadAsync(
+      "assets/images/moon_displ_map_8bit.jpg"
+    ),
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/moon_textmap_1k.jpg"
     ),
   };
 
@@ -282,6 +295,31 @@ window.addEventListener("mousemove", (e) => {
 
   earth.receiveShadow = true;
   scene.add(earth);
+
+  // Render Luna.
+  let luna = new THREE.Mesh(
+    new THREE.SphereGeometry(2, 70, 70),
+    new THREE.MeshPhysicalMaterial({
+      map: moonTextures.map, // sphere base colour
+      bumpMap: moonTextures.bump, // make texture surface uneven
+      bumpScale: 0.1, // size of the bumps
+      envMap, // environmental map on sphere material
+      envMapIntensity: 1.0, // environmental map effect strength
+      sheen: 0.4,
+      sheenRoughness: 1.0,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.5,
+    })
+  );
+  luna.position.set(20, 4, 3);
+  luna.rotateOnWorldAxis(
+    new THREE.Vector3(randomize(), randomize()).normalize(),
+    24.5
+  );
+  luna.sunEnvIntensity = 0.4;
+  luna.MoonEnvIntensity = 0.1;
+  luna.receiveShadow = true;
+  scene.add(luna);
 
   let clock = new THREE.Clock();
 
@@ -371,8 +409,8 @@ window.addEventListener("mousemove", (e) => {
     // Elapsed time since the last frame.
     let delta = clock.getDelta();
 
-    // Rotate the planet counterclockwise on its axis.
-    earth.rotation.y += ROTATIONAL_SPEED;
+    earth.rotation.y += ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
+    luna.rotation.y -= ROTATIONAL_SPEED * 3.5; // yes, I know that the Moon is tidally locked to Earth
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

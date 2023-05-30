@@ -36,7 +36,10 @@ const camera = new THREE.PerspectiveCamera(
 // Move the camera above and farther way from the screen's centre.
 camera.position.set(0, 15, 400);
 
-/*
+//
+// Starfield.
+//
+
 // Load a textured skybox as a background.
 const skyLoader = new THREE.CubeTextureLoader();
 scene.background = skyLoader.load([
@@ -46,11 +49,7 @@ scene.background = skyLoader.load([
   "assets/images/starfield.png",
   "assets/images/starfield.png",
   "assets/images/starfield.png",
-]); */
-
-//
-// Starfield.
-//
+]); 
 
 const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
 
@@ -80,13 +79,15 @@ const particleTexture = textureLoader.load("assets/images/star_small.png");
 // Material for stars.
 const particleMaterial = new THREE.PointsMaterial({
   map: particleTexture,
-  size: 0.05, // star size
+  size: 2, // star size
   sizeAttenuation: true, // star size reduces with camera distance
+  color: "#ffffff", // same as daytime background
+  transparent: true
 });
 
 // Mesh for stars.
-const stars = new THREE.Points(particleGeometry, particleMaterial);
-scene.add(stars);
+const particleMesh = new THREE.Points(particleGeometry, particleMaterial);
+scene.add(particleMesh);
 
 //
 // Rings

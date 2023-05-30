@@ -5,6 +5,11 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import anime from "animejs/lib/anime.es.js";
+
+// Animate backgrounds.
+let sunBackground = document.querySelector(".sun-background");
+let moonBackground = document.querySelector(".moon-background");
 
 // Constants.
 const MINIMUM_RADIUS = 0.2; // minimum radius for a plane to circle
@@ -102,7 +107,7 @@ controls.enableDamping = true; // inertia!
 
 // Sunlight properties.
 const sunLight = new THREE.DirectionalLight(new THREE.Color("#ffffff"), 3.5);
-sunLight.position.set(10, 20, 10); // Position on top right-hand side of the screen.
+sunLight.position.set(10, 20, 10); // position on top right-hand side of the screen
 sunLight.castShadow = true;
 sunLight.shadow.mapSize.width = 512;
 sunLight.shadow.mapSize.height = 512;
@@ -113,6 +118,26 @@ sunLight.shadow.camera.bottom = -10;
 sunLight.shadow.camera.top = 10;
 sunLight.shadow.camera.right = 10;
 scene.add(sunLight);
+
+// Moonlight properties.
+const moonLight = new THREE.DirectionalLight(
+  new THREE.Color("#ffffff").convertLinearToSRGB(),
+  0
+);
+moonLight.position.set(-10, 20, 10); // position on top left-hand side of the screen
+moonLight.castShadow = true;
+moonLight.shadow.mapSize.width = 512;
+moonLight.shadow.mapSize.height = 512;
+moonLight.shadow.camera.near = 0.5;
+moonLight.shadow.camera.far = 100;
+moonLight.shadow.camera.left = -10;
+moonLight.shadow.camera.bottom = -10;
+moonLight.shadow.camera.top = 10;
+moonLight.shadow.camera.right = 10;
+scene.add(moonLight);
+
+/* const helper = new THREE.CameraHelper(light.shadow.camera);
+scene.add(helper); */
 
 let mousePos = new THREE.Vector2(0, 0);
 
@@ -229,6 +254,26 @@ window.addEventListener("mousemove", (e) => {
   scene.add(sphere);
 
   let clock = new THREE.Clock();
+
+  // Animate background on keypress.
+  window.addEventListener("keypress", (event) => {
+    if (event.key != "q") {
+      return;
+    }
+
+    let obj = { t: 0 }; // start at fully transparent background
+    anime({
+      targets: obj,
+      t: [0, 1], // background transparency (0 == transparent, 1 == opaque)
+      complete: () => { },
+      update: () => {
+        sunBackground.style.opacity = 1 - obj.t;
+        moonBackground.style.opacity = obj.t;
+      },
+      easing: "easeInOutSine",
+      duration: 1500,
+    });
+  });
 
   renderer.setAnimationLoop(() => {
     // Elapsed time since the last frame.

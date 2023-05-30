@@ -428,7 +428,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.5,
     })
   );
-  venus.position.set(85, -3, 0);
+  venus.position.set(100, -3, 0);
   venus.rotateOnWorldAxis(
     new THREE.Vector3(randomize(), randomize()).normalize(),
     17.5
@@ -451,7 +451,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.2,
     })
   );
-  mars.position.set(-35, -3, 0);
+  mars.position.set(-60, -3, 0);
   mars.sunEnvIntensity = 0.4;
   mars.MoonEnvIntensity = 0.1;
   mars.receiveShadow = true;

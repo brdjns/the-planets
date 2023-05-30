@@ -9,6 +9,9 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 // Constants.
 const MINIMUM_RADIUS = 0.2; // minimum radius for a plane to circle
 const ROTATIONAL_SPEED = 0.002; // speed of planetary axial rotation
+const MOUSE_Y_OFFSET = 0.0003; // offset for mouse position on Y axis
+const MOUSE_X_OFFSET = 0.0003; // offset for mouse position on X axis
+const DAMP_FACTOR = 0.05; // control damping factor
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -94,7 +97,7 @@ document.body.appendChild(renderer.domElement);
 // Add controls.
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 0, 0); // centre the scene
-controls.dampingFactor = 0.05;
+controls.dampingFactor = DAMP_FACTOR;
 controls.enableDamping = true; // inertia!
 
 // Sunlight properties.
@@ -118,8 +121,8 @@ window.addEventListener("mousemove", (e) => {
   let x = e.clientX - window.innerWidth * 0.5;
   let y = e.clientY - window.innerHeight * 0.5;
 
-  mousePos.x = x * 0.0003;
-  mousePos.y = y * 0.0003;
+  mousePos.x = x * MOUSE_X_OFFSET;
+  mousePos.y = y * MOUSE_Y_OFFSET;
 });
 
 // Animation loop as an asynchronous function.

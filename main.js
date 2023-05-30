@@ -384,15 +384,11 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.5,
     })
   );
-  luna.position.set(14, 4, 0);
-  luna.rotateOnWorldAxis(
-    new THREE.Vector3(randomize(), randomize()).normalize(),
-    24.5
-  );
+  luna.position.set(18, 4, 0);
   luna.sunEnvIntensity = 0.4;
   luna.MoonEnvIntensity = 0.1;
   luna.receiveShadow = true;
-  scene.add(luna);
+  earth.add(luna);
 
   // Render Mercury.
   let mercury = new THREE.Mesh(
@@ -569,7 +565,6 @@ window.addEventListener("mousemove", (e) => {
     let delta = clock.getDelta();
 
     earth.rotation.y += ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
-    luna.rotation.y += ROTATIONAL_SPEED * 3.5; // yes, I know that the Moon is tidally locked to Earth
     mercury.rotation.y += ROTATIONAL_SPEED / 2;
     venus.rotation.y += ROTATIONAL_SPEED / 1.8;
     mars.rotation.y += ROTATIONAL_SPEED * 1.3;

@@ -224,7 +224,7 @@ window.addEventListener("mousemove", (e) => {
   ring3.moonOpacity = 0.03;
   ringScene.add(ring3);
 
-  let textures = {
+  let earthTextures = {
     bump: await new THREE.TextureLoader().loadAsync(
       "assets/images/earthbump.jpg"
     ),
@@ -243,25 +243,25 @@ window.addEventListener("mousemove", (e) => {
   let plane = (await new GLTFLoader().loadAsync("assets/glb/plane.glb")).scene
     .children[0];
   let planesData = [
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
-    makePlane(plane, textures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
+    makePlane(plane, earthTextures.planeTrailMask, envMap, scene),
   ];
 
-  // Render a sphere.
-  let sphere = new THREE.Mesh(
+  // Render Earth.
+  let earth = new THREE.Mesh(
     new THREE.SphereGeometry(10, 70, 70),
     new THREE.MeshPhysicalMaterial({
-      map: textures.map, // sphere base colour
-      roughnessMap: textures.spec, // roughness of sphere texture
-      bumpMap: textures.bump, // make texture surface uneven
+      map: earthTextures.map, // sphere base colour
+      roughnessMap: earthTextures.spec, // roughness of sphere texture
+      bumpMap: earthTextures.bump, // make texture surface uneven
       bumpScale: 0.07, // size of the bumps
       envMap, // environmental map on sphere material
       envMapIntensity: 1.0, // environmental map effect strength
@@ -274,21 +274,21 @@ window.addEventListener("mousemove", (e) => {
 
   // Intensity of sun and moon environmental map.
   // We want a big difference between night and day.
-  sphere.sunEnvIntensity = 0.4;
-  sphere.MoonEnvIntensity = 0.1;
+  earth.sunEnvIntensity = 0.4;
+  earth.MoonEnvIntensity = 0.1;
 
-  // Give the planet axial tilt.
-  sphere.rotation.y += Math.PI * 3.38; // rotate to Africa
-  
-  sphere.receiveShadow = true;
-  scene.add(sphere);
+  // Give Earth axial tilt.
+  earth.rotation.y += Math.PI * 3.38; // rotate to Africa
+
+  earth.receiveShadow = true;
+  scene.add(earth);
 
   let clock = new THREE.Clock();
 
   let daytime = true; // true if daytime
   let animating = false; // true if animation is currently ongoing
 
-  // Animate background on keypress.
+  // Animate background on mouse movement.
   window.addEventListener("mousemove", (event) => {
     if (animating) {
       return; // do nothing if animation still ongoing
@@ -334,7 +334,7 @@ window.addEventListener("mousemove", (e) => {
         moonLight.position.setY(20 * obj.t);
 
         // Animate material sheen when doing night/day transition.
-        sphere.material.sheen = 1 - obj.t;
+        earth.material.sheen = 1 - obj.t;
 
         // Change the environmental map intensity for all objects that are
         // meshes.
@@ -372,7 +372,7 @@ window.addEventListener("mousemove", (e) => {
     let delta = clock.getDelta();
 
     // Rotate the planet counterclockwise on its axis.
-    sphere.rotation.y += ROTATIONAL_SPEED;
+    earth.rotation.y += ROTATIONAL_SPEED;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

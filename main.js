@@ -17,6 +17,8 @@ const ROTATIONAL_SPEED = 0.002; // speed of planetary axial rotation
 const MOUSE_Y_OFFSET = 0.0003; // offset for mouse position on Y axis
 const MOUSE_X_OFFSET = 0.0003; // offset for mouse position on X axis
 const DAMP_FACTOR = 0.05; // control damping factor
+const PIXELS_LEFT_EDGE = 200; // number of pixels from left screen edge
+const PIXELS_RIGHT_EDGE = 200; // number of pixels from right screen edge
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -276,16 +278,27 @@ window.addEventListener("mousemove", (e) => {
   let animating = false; // true if animation is currently ongoing
 
   // Animate background on keypress.
-  window.addEventListener("keypress", (event) => {
-    if (event.key != "q") {
-      return;
-    }
+  window.addEventListener("mousemove", (event) => {
     if (animating) {
       return; // do nothing if animation still ongoing
     }
 
-    // Go from daytime to nighttime and back by swapping the transparency array.
-    let anim = !daytime ? [1, 0] : [0, 1];
+    // Go from daytime to nighttime and back by swapping the transparency
+    // array.
+    //
+    // This depends on where our mouse is on the screen. We transition to
+    // nighttime if the cursor is at the right screen-edge and it's daytime.
+    // Conversely we transition to daytime if the cursor is at the left
+    // screen-edge and it's nighttime.
+
+    let anim = undefined;
+    if (event.clientX > window.innerWidth - PIXELS_RIGHT_EDGE && !daytime) {
+      anim = [1, 0]; // become daytime
+    } else if (event.clientX < PIXELS_LEFT_EDGE && daytime) {
+      anim = [0, 1]; // become nighttime
+    } else {
+      return; // do nothing: cursor is at neither screen edge
+    }
 
     animating = true;
 
@@ -316,19 +329,21 @@ window.addEventListener("mousemove", (e) => {
         // meshes.
         scene.children.forEach((child) => {
           child.traverse((object) => {
+            /* 
+               We want to gradually change the intensity from 1 to 2.
+               We adopt the following scheme, where t == level of transparency:
+            
+               1 * (1-t) + 2 * t
+               1 * (1-0) + 2 * 0     = 1    <-- value at the animation's start
+               1 * (1-0.5) + 2 * 0.5 = 1.5  <-- value at the animation's midpoint
+               1 * (1-1) + 2 * 1     = 2    <-- value at the animation's end
+            */
             if (object instanceof THREE.Mesh && object.material.envMap) {
               object.material.envMapIntensity =
                 object.sunEnvIntensity * // we want this intensity at the start
                 (1 - obj.t) *
                 object.MoonEnvIntensity * // we want this intensity at the end
                 obj.t;
-              // We want to gradually change the intensity from 1 to 2.
-              // We adopt the following scheme:
-              //
-              // 1 * (1-t) + 2 * t
-              // 1 * (1-0) + 2 * 0     = 1    <-- value at the animation's start
-              // 1 * (1-0.5) + 2 * 0.5 = 1.5  <-- value at the animation's midpoint
-              // 1 * (1-1) + 2 * 1     = 2    <-- value at the animation's end  */
             }
           });
         });

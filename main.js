@@ -262,6 +262,12 @@ window.addEventListener("mousemove", (e) => {
     ),
   };
 
+  let venusTextures = {
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/venusmap.jpg"
+    ),
+  };
+
   // Select fire mesh of our plane.
   let plane = (await new GLTFLoader().loadAsync("assets/glb/plane.glb")).scene
     .children[0];
@@ -356,6 +362,29 @@ window.addEventListener("mousemove", (e) => {
   mercury.receiveShadow = true;
   scene.add(mercury);
 
+  // Render Venus.
+  let venus = new THREE.Mesh(
+    new THREE.SphereGeometry(9.0, 70, 70),
+    new THREE.MeshPhysicalMaterial({
+      map: venusTextures.map,
+      envMap,
+      envMapIntensity: 1.0,
+      sheen: 1.4,
+      sheenRoughness: 0.4,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.5,
+    })
+  );
+  venus.position.set(29, -3, 12);
+  venus.rotateOnWorldAxis(
+    new THREE.Vector3(randomize(), randomize()).normalize(),
+    17.5
+  );
+  venus.sunEnvIntensity = 0.4;
+  venus.MoonEnvIntensity = 0.1;
+  venus.receiveShadow = true;
+  scene.add(venus);
+
   let clock = new THREE.Clock();
 
   let daytime = true; // true if daytime
@@ -447,6 +476,7 @@ window.addEventListener("mousemove", (e) => {
     earth.rotation.y += ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
     luna.rotation.y += ROTATIONAL_SPEED * 3.5; // yes, I know that the Moon is tidally locked to Earth
     mercury.rotation.y += ROTATIONAL_SPEED / 2;
+    venus.rotation.y += ROTATIONAL_SPEED / 1.8;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

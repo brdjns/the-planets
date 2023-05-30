@@ -75,7 +75,7 @@ particleGeometry.setAttribute(
 
 // Texture for stars.
 const textureLoader = new THREE.TextureLoader();
-const particleTexture = textureLoader.load("assets/images/star.png");
+const particleTexture = textureLoader.load("assets/images/star_small.png");
 
 // Material for stars.
 const particleMaterial = new THREE.PointsMaterial({

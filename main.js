@@ -32,7 +32,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 // Move the camera above and farther way from the screen's centre.
-camera.position.set(0, 15, 50);
+camera.position.set(0, 15, 80);
 
 // Load a textured skybox as a background.
 const skyLoader = new THREE.CubeTextureLoader();

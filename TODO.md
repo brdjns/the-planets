@@ -5,4 +5,5 @@
 * Flesh out the README
 * Add sound effects for each plane
 * Add background music
+* ~~Add skybox~~
 * Figure out how to use a lambda to call makePlane N times to reduce repetitive code

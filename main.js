@@ -34,6 +34,17 @@ const camera = new THREE.PerspectiveCamera(
 // Move the camera above and farther way from the screen's centre.
 camera.position.set(0, 15, 50);
 
+// Load a textured skybox as a background.
+const skyLoader = new THREE.CubeTextureLoader();
+scene.background = skyLoader.load([
+  "assets/images/starfield.png",
+  "assets/images/starfield.png",
+  "assets/images/starfield.png",
+  "assets/images/starfield.png",
+  "assets/images/starfield.png",
+  "assets/images/starfield.png",
+]);
+
 //
 // Rings
 //
@@ -268,7 +279,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Give the planet axial tilt.
   sphere.rotation.y += Math.PI * 3.38; // rotate to Africa
-
+  
   sphere.receiveShadow = true;
   scene.add(sphere);
 

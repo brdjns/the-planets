@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { arraySlice } from "three/src/animation/AnimationUtils";
 import anime from "animejs/lib/anime.es.js";
 
 // Animate backgrounds.
@@ -19,6 +20,7 @@ const MOUSE_X_OFFSET = 0.0003; // offset for mouse position on X axis
 const DAMP_FACTOR = 0.05; // control damping factor
 const PIXELS_LEFT_EDGE = 200; // number of pixels from left screen edge
 const PIXELS_RIGHT_EDGE = 200; // number of pixels from right screen edge
+const DISPERSION_FACTOR = 1000; // factor of 10 used to disperse starfield
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -34,6 +36,7 @@ const camera = new THREE.PerspectiveCamera(
 // Move the camera above and farther way from the screen's centre.
 camera.position.set(0, 15, 400);
 
+/*
 // Load a textured skybox as a background.
 const skyLoader = new THREE.CubeTextureLoader();
 scene.background = skyLoader.load([
@@ -43,7 +46,47 @@ scene.background = skyLoader.load([
   "assets/images/starfield.png",
   "assets/images/starfield.png",
   "assets/images/starfield.png",
-]);
+]); */
+
+//
+// Starfield.
+//
+
+const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
+
+// The number of stars to generate (actual count is N/3 where N == particle count).
+const particleCount = 15000;
+
+// Each star is made up of a vertex. The array holds three values (as X,Y,Z
+// coordinates) per vertex.
+const vertices = new Float32Array(particleCount * 3);
+
+// Loop through all vertices and randomize their positions.
+// Also, centre starfield and disperse across entire screen.
+for (let i = 0; i < particleCount * 3; ++i) {
+  vertices[i] = (Math.random() - 0.5) * DISPERSION_FACTOR; // get values in range [-50:50]
+}
+
+// Geometry for stars.
+particleGeometry.setAttribute(
+  "position",
+  new THREE.BufferAttribute(vertices, 3) // 3 values for each vertex
+);
+
+// Texture for stars.
+const textureLoader = new THREE.TextureLoader();
+const particleTexture = textureLoader.load("assets/images/star.png");
+
+// Material for stars.
+const particleMaterial = new THREE.PointsMaterial({
+  map: particleTexture,
+  size: 0.05, // star size
+  sizeAttenuation: true, // star size reduces with camera distance
+});
+
+// Mesh for stars.
+const stars = new THREE.Points(particleGeometry, particleMaterial);
+scene.add(stars);
 
 //
 // Rings
@@ -95,6 +138,9 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 // It's a good idea to use the width and height of the area we want to fill
 // with our app - in this case, the width and height of the browser window.
 renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Avoid pixelation on high resolution screens.
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 // Set tone mapping.
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -269,9 +315,7 @@ window.addEventListener("mousemove", (e) => {
   };
 
   let marsTextures = {
-    map: await new THREE.TextureLoader().loadAsync(
-      "assets/images/marsmap.jpg"
-    ),
+    map: await new THREE.TextureLoader().loadAsync("assets/images/marsmap.jpg"),
   };
 
   let jupiterTextures = {
@@ -410,14 +454,14 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.2,
     })
   );
-  mars.position.set(-35, 10, 0);
+  mars.position.set(-35, -3, 0);
   mars.sunEnvIntensity = 0.4;
   mars.MoonEnvIntensity = 0.1;
   mars.receiveShadow = true;
   scene.add(mars);
 
-   // Render Jupiter.
-   let jupiter = new THREE.Mesh(
+  // Render Jupiter.
+  let jupiter = new THREE.Mesh(
     new THREE.SphereGeometry(50, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: jupiterTextures.map,
@@ -524,11 +568,11 @@ window.addEventListener("mousemove", (e) => {
     let delta = clock.getDelta();
 
     earth.rotation.y += ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
-    luna.rotation.y += (ROTATIONAL_SPEED * 3.5); // yes, I know that the Moon is tidally locked to Earth
-    mercury.rotation.y += (ROTATIONAL_SPEED / 2);
-    venus.rotation.y += (ROTATIONAL_SPEED / 1.8);
-    mars.rotation.y += (ROTATIONAL_SPEED * 1.3);
-    jupiter.rotation.y += (ROTATIONAL_SPEED * 2.4);
+    luna.rotation.y += ROTATIONAL_SPEED * 3.5; // yes, I know that the Moon is tidally locked to Earth
+    mercury.rotation.y += ROTATIONAL_SPEED / 2;
+    venus.rotation.y += ROTATIONAL_SPEED / 1.8;
+    mars.rotation.y += ROTATIONAL_SPEED * 1.3;
+    jupiter.rotation.y += ROTATIONAL_SPEED * 2.4;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

@@ -49,7 +49,7 @@ scene.background = skyLoader.load([
   "assets/images/starfield.png",
   "assets/images/starfield.png",
   "assets/images/starfield.png",
-]); 
+]);
 
 const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
 
@@ -82,7 +82,7 @@ const particleMaterial = new THREE.PointsMaterial({
   size: 2, // star size
   sizeAttenuation: true, // star size reduces with camera distance
   color: "#ffffff", // same as daytime background
-  transparent: true
+  transparent: true,
 });
 
 // Mesh for stars.
@@ -325,6 +325,18 @@ window.addEventListener("mousemove", (e) => {
     ),
   };
 
+  let saturnTextures = {
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/saturnmap.jpg"
+    ),
+  };
+
+  let saturnRingTextures = {
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/saturnring.png"
+    ),
+  };
+
   // Select fire mesh of our plane.
   let plane = (await new GLTFLoader().loadAsync("assets/glb/plane.glb")).scene
     .children[0];
@@ -475,6 +487,45 @@ window.addEventListener("mousemove", (e) => {
   jupiter.MoonEnvIntensity = 0.1;
   jupiter.receiveShadow = true;
   scene.add(jupiter);
+
+  // Render Saturn.
+  let saturn = new THREE.Mesh(
+    new THREE.SphereGeometry(30, 70, 70),
+    new THREE.MeshPhysicalMaterial({
+      map: saturnTextures.map,
+      envMap,
+      envMapIntensity: 1.0,
+      sheen: 0.2,
+      sheenRoughness: 1.4,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.2,
+    })
+  );
+  saturn.position.set(-290, 20, 3);
+  saturn.sunEnvIntensity = 0.4;
+  saturn.MoonEnvIntensity = 0.1;
+  saturn.receiveShadow = true;
+  scene.add(saturn);
+
+  // Render Saturn.
+  let saturnRing = new THREE.Mesh(
+    new THREE.RingGeometry(30, 60, 70),
+    new THREE.MeshPhysicalMaterial({
+      map: saturnRingTextures.map,
+      side: THREE.DoubleSide,
+      envMap,
+      envMapIntensity: 1.0,
+      sheen: 0.2,
+      sheenRoughness: 1.4,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.2,
+    })
+  );
+  //saturnRing.position.set(-290, 20, 3);
+  saturnRing.sunEnvIntensity = 0.4;
+  saturnRing.MoonEnvIntensity = 0.1;
+  saturnRing.receiveShadow = true;
+  saturn.add(saturnRing);
 
   let clock = new THREE.Clock();
 

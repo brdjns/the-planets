@@ -173,6 +173,10 @@ window.addEventListener("mousemove", (e) => {
       opacity: 0.35,
     })
   );
+
+  // Change opacity of rings when doing night/day transition.
+  ring1.sunOpacity = 0.35;
+  ring1.moonOpacity = 0.03;
   ringScene.add(ring1);
 
   const ring2 = new THREE.Mesh(
@@ -184,6 +188,10 @@ window.addEventListener("mousemove", (e) => {
       side: THREE.DoubleSide,
     })
   );
+
+  // Change opacity of rings when doing night/day transition.
+  ring2.sunOpacity = 0.35;
+  ring2.moonOpacity = 0.1;
   ringScene.add(ring2);
 
   const ring3 = new THREE.Mesh(
@@ -197,6 +205,10 @@ window.addEventListener("mousemove", (e) => {
       side: THREE.DoubleSide,
     })
   );
+
+  // Change opacity of rings when doing night/day transition.
+  ring3.sunOpacity = 0.35;
+  ring3.moonOpacity = 0.03;
   ringScene.add(ring3);
 
   let textures = {
@@ -247,6 +259,11 @@ window.addEventListener("mousemove", (e) => {
     })
   );
 
+  // Intensity of sun and moon environmental map.
+  // We want a big difference between night and day.
+  sphere.sunEnvIntensity = 0.4;
+  sphere.MoonEnvIntensity = 0.1;
+
   // Give the planet axial tilt.
   sphere.rotation.y += Math.PI * 3.38; // rotate to Africa
 
@@ -262,27 +279,48 @@ window.addEventListener("mousemove", (e) => {
     }
 
     // Object to animate.
-    let object = { t: 0 }; // start at fully transparent background
+    let obj = { t: 0 }; // start at fully transparent background
     anime({
-      targets: object,
+      targets: obj,
       t: [0, 1], // background transparency (0 == transparent, 1 == opaque)
 
       // Run when animation is done (like a destructor).
-      complete: () => { },
-      
+      complete: () => {},
+
       // Run on every frame where animation is being updated.
       update: () => {
-        sunLight.intensity = 3.5 * (1 - object.t); // 1 when animation starts 
-        moonLight.intensity = 3.5 * object.t; // 0 when animation starts
+        sunLight.intensity = 3.5 * (1 - obj.t); // 1 when animation starts
+        moonLight.intensity = 3.5 * obj.t; // 0 when animation starts
 
-        sunLight.position.setY(20 * (1 - object.t));
-        moonLight.position.setY(20 * object.t);
+        sunLight.position.setY(20 * (1 - obj.t));
+        moonLight.position.setY(20 * obj.t);
 
         // Animate material sheen when doing night/day transition.
-        sphere.material.sheen = 1 - object.t;
+        sphere.material.sheen = 1 - obj.t;
 
-        sunBackground.style.opacity = 1 - object.t;
-        moonBackground.style.opacity = object.t;
+        // Change the environmental map intensity for all objects that are
+        // meshes.
+        scene.children.forEach((child) => {
+          child.traverse((object) => {
+            if (object instanceof THREE.Mesh && object.material.envMap) {
+              object.material.envMapIntensity =
+                object.sunEnvIntensity * // we want this intensity at the start
+                (1 - obj.t) *
+                object.MoonEnvIntensity * // we want this intensity at the end
+                obj.t;
+              // We want to gradually change the intensity from 1 to 2.
+              // We adopt the following scheme:
+              //
+              // 1 * (1-t) + 2 * t
+              // 1 * (1-0) + 2 * 0     = 1    <-- value at the animation's start
+              // 1 * (1-0.5) + 2 * 0.5 = 1.5  <-- value at the animation's midpoint
+              // 1 * (1-1) + 2 * 1     = 2    <-- value at the animation's end  */
+            }
+          });
+        });
+
+        sunBackground.style.opacity = 1 - obj.t;
+        moonBackground.style.opacity = obj.t;
       },
       easing: "easeOutElastic(3, 0.7)", // https://animejs.com/documentation/#elasticEasing
       duration: 1500,
@@ -412,6 +450,10 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
   plane.traverse((object) => {
     if (object instanceof THREE.Mesh) {
       object.material.envMap = envMap;
+
+      // Intensity of plane environmental map.
+      object.sunEnvIntensity = 1;
+      object.MoonEnvIntensity = 0.3;
       object.castShadow = true;
       object.receiveShadow = true;
     }
@@ -439,6 +481,9 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
     })
   );
 
+  // Intensity of trail environmental map.
+  trail.sunEnvIntensity = 3;
+  trail.MoonEnvIntensity = 0.7;
   trail.rotateX(Math.PI);
   trail.translateY(1.1);
 

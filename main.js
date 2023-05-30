@@ -34,14 +34,14 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 // Move the camera above and farther way from the screen's centre.
-camera.position.set(0, 15, 400);
+camera.position.set(0, (Math.random() - 0.5) * 800, 400);
 
 //
 // Starfield.
 //
 
 // Load a textured skybox as a background.
-const skyLoader = new THREE.CubeTextureLoader();
+/* const skyLoader = new THREE.CubeTextureLoader();
 scene.background = skyLoader.load([
   "assets/images/starfield.png",
   "assets/images/starfield.png",
@@ -49,7 +49,7 @@ scene.background = skyLoader.load([
   "assets/images/starfield.png",
   "assets/images/starfield.png",
   "assets/images/starfield.png",
-]);
+]); */
 
 const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
 

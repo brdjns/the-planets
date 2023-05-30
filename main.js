@@ -252,6 +252,16 @@ window.addEventListener("mousemove", (e) => {
     ),
   };
 
+  let mercuryTextures = {
+    bump: await new THREE.TextureLoader().loadAsync(
+      // Mercury and Luna aren't that far off in appearance, so this is okay.
+      "assets/images/moon_displ_map_8bit.jpg"
+    ),
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/mercurymap.jpg"
+    ),
+  };
+
   // Select fire mesh of our plane.
   let plane = (await new GLTFLoader().loadAsync("assets/glb/plane.glb")).scene
     .children[0];
@@ -320,6 +330,31 @@ window.addEventListener("mousemove", (e) => {
   luna.MoonEnvIntensity = 0.1;
   luna.receiveShadow = true;
   scene.add(luna);
+
+  // Render Mercury.
+  let mercury = new THREE.Mesh(
+    new THREE.SphereGeometry(2.2, 70, 70),
+    new THREE.MeshPhysicalMaterial({
+      map: mercuryTextures.map, // sphere base colour
+      bumpMap: moonTextures.bump, // make texture surface uneven
+      bumpScale: 0.1, // size of the bumps
+      envMap, // environmental map on sphere material
+      envMapIntensity: 1.0, // environmental map effect strength
+      sheen: 0.4,
+      sheenRoughness: 1.0,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.5,
+    })
+  );
+  mercury.position.set(25, 14, 3);
+  mercury.rotateOnWorldAxis(
+    new THREE.Vector3(randomize(), randomize()).normalize(),
+    24.5
+  );
+  mercury.sunEnvIntensity = 0.4;
+  mercury.MoonEnvIntensity = 0.1;
+  mercury.receiveShadow = true;
+  scene.add(mercury);
 
   let clock = new THREE.Clock();
 
@@ -411,6 +446,7 @@ window.addEventListener("mousemove", (e) => {
 
     earth.rotation.y += ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
     luna.rotation.y -= ROTATIONAL_SPEED * 3.5; // yes, I know that the Moon is tidally locked to Earth
+    mercury.rotation.y -= ROTATIONAL_SPEED / 2;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

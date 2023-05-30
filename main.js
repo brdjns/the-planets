@@ -272,20 +272,34 @@ window.addEventListener("mousemove", (e) => {
 
   let clock = new THREE.Clock();
 
+  let daytime = true; // true if daytime
+  let animating = false; // true if animation is currently ongoing
+
   // Animate background on keypress.
   window.addEventListener("keypress", (event) => {
     if (event.key != "q") {
       return;
     }
+    if (animating) {
+      return; // do nothing if animation still ongoing
+    }
+
+    // Go from daytime to nighttime and back by swapping the transparency array.
+    let anim = !daytime ? [1, 0] : [0, 1];
+
+    animating = true;
 
     // Object to animate.
     let obj = { t: 0 }; // start at fully transparent background
     anime({
       targets: obj,
-      t: [0, 1], // background transparency (0 == transparent, 1 == opaque)
+      t: anim,
 
       // Run when animation is done (like a destructor).
-      complete: () => {},
+      complete: () => {
+        animating = false;
+        daytime = !daytime; // choose opposite of whatever daytime was
+      },
 
       // Run on every frame where animation is being updated.
       update: () => {

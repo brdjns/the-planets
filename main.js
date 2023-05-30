@@ -261,16 +261,30 @@ window.addEventListener("mousemove", (e) => {
       return;
     }
 
-    let obj = { t: 0 }; // start at fully transparent background
+    // Object to animate.
+    let object = { t: 0 }; // start at fully transparent background
     anime({
-      targets: obj,
+      targets: object,
       t: [0, 1], // background transparency (0 == transparent, 1 == opaque)
+
+      // Run when animation is done (like a destructor).
       complete: () => { },
+      
+      // Run on every frame where animation is being updated.
       update: () => {
-        sunBackground.style.opacity = 1 - obj.t;
-        moonBackground.style.opacity = obj.t;
+        sunLight.intensity = 3.5 * (1 - object.t); // 1 when animation starts 
+        moonLight.intensity = 3.5 * object.t; // 0 when animation starts
+
+        sunLight.position.setY(20 * (1 - object.t));
+        moonLight.position.setY(20 * object.t);
+
+        // Animate material sheen when doing night/day transition.
+        sphere.material.sheen = 1 - object.t;
+
+        sunBackground.style.opacity = 1 - object.t;
+        moonBackground.style.opacity = object.t;
       },
-      easing: "easeInOutSine",
+      easing: "easeOutElastic(3, 0.7)", // https://animejs.com/documentation/#elasticEasing
       duration: 1500,
     });
   });

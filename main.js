@@ -32,7 +32,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 // Move the camera above and farther way from the screen's centre.
-camera.position.set(0, 15, 80);
+camera.position.set(0, 15, 400);
 
 // Load a textured skybox as a background.
 const skyLoader = new THREE.CubeTextureLoader();
@@ -274,6 +274,12 @@ window.addEventListener("mousemove", (e) => {
     ),
   };
 
+  let jupiterTextures = {
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/jupitermap.jpg"
+    ),
+  };
+
   // Select fire mesh of our plane.
   let plane = (await new GLTFLoader().loadAsync("assets/glb/plane.glb")).scene
     .children[0];
@@ -333,7 +339,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.5,
     })
   );
-  luna.position.set(20, 4, 3);
+  luna.position.set(14, 4, 0);
   luna.rotateOnWorldAxis(
     new THREE.Vector3(randomize(), randomize()).normalize(),
     24.5
@@ -358,7 +364,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.5,
     })
   );
-  mercury.position.set(25, 14, 3);
+  mercury.position.set(140, -6, 0);
   mercury.rotateOnWorldAxis(
     new THREE.Vector3(randomize(), randomize()).normalize(),
     24.5
@@ -381,7 +387,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.5,
     })
   );
-  venus.position.set(29, -3, 12);
+  venus.position.set(85, -3, 0);
   venus.rotateOnWorldAxis(
     new THREE.Vector3(randomize(), randomize()).normalize(),
     17.5
@@ -404,11 +410,30 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.2,
     })
   );
-  mars.position.set(-35, 10, 3);
+  mars.position.set(-35, 10, 0);
   mars.sunEnvIntensity = 0.4;
   mars.MoonEnvIntensity = 0.1;
   mars.receiveShadow = true;
   scene.add(mars);
+
+   // Render Jupiter.
+   let jupiter = new THREE.Mesh(
+    new THREE.SphereGeometry(50, 70, 70),
+    new THREE.MeshPhysicalMaterial({
+      map: jupiterTextures.map,
+      envMap,
+      envMapIntensity: 1.0,
+      sheen: 0.2,
+      sheenRoughness: 1.4,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.2,
+    })
+  );
+  jupiter.position.set(-160, 20, 3);
+  jupiter.sunEnvIntensity = 0.4;
+  jupiter.MoonEnvIntensity = 0.1;
+  jupiter.receiveShadow = true;
+  scene.add(jupiter);
 
   let clock = new THREE.Clock();
 
@@ -502,7 +527,8 @@ window.addEventListener("mousemove", (e) => {
     luna.rotation.y += (ROTATIONAL_SPEED * 3.5); // yes, I know that the Moon is tidally locked to Earth
     mercury.rotation.y += (ROTATIONAL_SPEED / 2);
     venus.rotation.y += (ROTATIONAL_SPEED / 1.8);
-    mars.rotation.y += (ROTATIONAL_SPEED * 2);
+    mars.rotation.y += (ROTATIONAL_SPEED * 1.3);
+    jupiter.rotation.y += (ROTATIONAL_SPEED * 2.4);
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

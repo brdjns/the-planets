@@ -445,8 +445,8 @@ window.addEventListener("mousemove", (e) => {
     let delta = clock.getDelta();
 
     earth.rotation.y += ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
-    luna.rotation.y -= ROTATIONAL_SPEED * 3.5; // yes, I know that the Moon is tidally locked to Earth
-    mercury.rotation.y -= ROTATIONAL_SPEED / 2;
+    luna.rotation.y += ROTATIONAL_SPEED * 3.5; // yes, I know that the Moon is tidally locked to Earth
+    mercury.rotation.y += ROTATIONAL_SPEED / 2;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

@@ -27,7 +27,7 @@ const scene = new THREE.Scene();
 
 // Set the type of camera we wish to use.
 const camera = new THREE.PerspectiveCamera(
-  45, // field of view
+  75, // field of view
   window.innerWidth / window.innerHeight, // screen aspect ratio
   0.1, // closest object that can be rendered
   1000 // farthest object that can be rendered

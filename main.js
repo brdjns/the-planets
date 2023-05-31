@@ -343,6 +343,12 @@ window.addEventListener("mousemove", (e) => {
     ),
   };
 
+  let neptuneTextures = {
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/neptunemap.jpg"
+    ),
+  };
+
   // Select fire mesh of our plane.
   let plane = (await new GLTFLoader().loadAsync("assets/glb/plane.glb")).scene
     .children[0];
@@ -551,6 +557,25 @@ window.addEventListener("mousemove", (e) => {
   uranus.receiveShadow = true;
   scene.add(uranus);
 
+  // Render Neptune.
+  let neptune = new THREE.Mesh(
+    new THREE.SphereGeometry(25, 70, 70),
+    new THREE.MeshPhysicalMaterial({
+      map: neptuneTextures.map,
+      envMap,
+      envMapIntensity: 1.0,
+      sheen: 0.2,
+      sheenRoughness: 1.4,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.4,
+    })
+  );
+  neptune.position.set(-520, 20, 0);
+  neptune.sunEnvIntensity = 0.4;
+  neptune.MoonEnvIntensity = 0.1;
+  neptune.receiveShadow = true;
+  scene.add(neptune);
+
   let clock = new THREE.Clock();
 
   let daytime = true; // true if daytime
@@ -646,6 +671,7 @@ window.addEventListener("mousemove", (e) => {
     jupiter.rotation.y += ROTATIONAL_SPEED * 2.4;
     saturn.rotation.z += ROTATIONAL_SPEED * 2.3;
     uranus.rotation.y -= ROTATIONAL_SPEED * 1.4;
+    neptune.rotation.y += ROTATIONAL_SPEED * 1.5;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

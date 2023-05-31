@@ -34,7 +34,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 // Move the camera above and farther way from the screen's centre.
-camera.position.set(0, (Math.random() - 0.5) * 800, 400);
+camera.position.set(902, -946, -732);
 
 //
 // Starfield.

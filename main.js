@@ -19,8 +19,8 @@ const MOUSE_X_OFFSET = 0.0003; // offset for mouse position on X axis
 const DAMP_FACTOR = 0.05; // control damping factor
 const PIXELS_LEFT_EDGE = 200; // number of pixels from left screen edge
 const PIXELS_RIGHT_EDGE = 200; // number of pixels from right screen edge
-const DISPERSION_FACTOR = 10000; // factor of 10 used to disperse starfield
-const PARTICLE_COUNT = 1000000; // number of stars to generate (actual number is N/3)
+const DISPERSION_FACTOR = 10_000; // factor of 10 used to disperse starfield
+const PARTICLE_COUNT = 1_000_000; // number of stars to generate (actual number is N/3)
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -30,7 +30,7 @@ const camera = new THREE.PerspectiveCamera(
   90, // field of view
   window.innerWidth / window.innerHeight, // screen aspect ratio
   0.1, // closest object that can be rendered
-  10000 // farthest object that can be rendered
+  10_000 // farthest object that can be rendered
 );
 
 // Move the camera above and farther way from the screen's centre.

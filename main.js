@@ -27,7 +27,7 @@ const scene = new THREE.Scene();
 
 // Set the type of camera we wish to use.
 const camera = new THREE.PerspectiveCamera(
-  90, // field of view
+  70, // field of view
   window.innerWidth / window.innerHeight, // screen aspect ratio
   0.1, // closest object that can be rendered
   10_000 // farthest object that can be rendered
@@ -52,9 +52,6 @@ scene.background = skyLoader.load([
 ]); */
 
 const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
-
-
-
 
 // Each star is made up of a vertex. The array holds three values (as X,Y,Z
 // coordinates) per vertex.
@@ -343,6 +340,12 @@ window.addEventListener("mousemove", (e) => {
     ),
   };
 
+  let uranusRingTextures = {
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/uranusring.png"
+    ),
+  };
+
   let neptuneTextures = {
     map: await new THREE.TextureLoader().loadAsync(
       "assets/images/neptunemap.jpg"
@@ -437,7 +440,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Venus.
   let venus = new THREE.Mesh(
-    new THREE.SphereGeometry(9.50, 70, 70),
+    new THREE.SphereGeometry(9.5, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: venusTextures.map,
       envMap,
@@ -515,7 +518,7 @@ window.addEventListener("mousemove", (e) => {
   saturn.receiveShadow = true;
   scene.add(saturn);
 
-  // Render Saturn's rings.
+  // Render Saturnian rings.
   let saturnRing = new THREE.Mesh(
     new THREE.RingGeometry(91.4, 182.8, 70),
     new THREE.MeshPhysicalMaterial({
@@ -548,10 +551,30 @@ window.addEventListener("mousemove", (e) => {
     })
   );
   uranus.position.set(-1000, 20, 0);
+  uranus.rotateOnWorldAxis(new THREE.Vector3(0, 0.19).normalize(), 17.5);
   uranus.sunEnvIntensity = 0.4;
   uranus.MoonEnvIntensity = 0.1;
   uranus.receiveShadow = true;
   scene.add(uranus);
+
+  // Render Uranian rings.
+  let uranusRing = new THREE.Mesh(
+    new THREE.RingGeometry(69.62, 79.62, 70),
+    new THREE.MeshPhysicalMaterial({
+      map: uranusRingTextures.map,
+      side: THREE.DoubleSide,
+      envMap,
+      envMapIntensity: 1.0,
+      sheen: 0.2,
+      sheenRoughness: 1.4,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.2,
+    })
+  );
+  uranusRing.sunEnvIntensity = 0.4;
+  uranusRing.MoonEnvIntensity = 0.1;
+  uranusRing.receiveShadow = true;
+  uranus.add(uranusRing);
 
   // Render Neptune.
   let neptune = new THREE.Mesh(
@@ -682,7 +705,7 @@ window.addEventListener("mousemove", (e) => {
     mars.rotation.y += ROTATIONAL_SPEED;
     jupiter.rotation.y += ROTATIONAL_SPEED * 2.4;
     saturn.rotation.z += ROTATIONAL_SPEED * 2.3;
-    uranus.rotation.y -= ROTATIONAL_SPEED * 1.4;
+    uranus.rotation.z -= ROTATIONAL_SPEED * 1.4;
     neptune.rotation.y += ROTATIONAL_SPEED * 1.5;
 
     // Reset the position + rotation of every group every time we rerender the

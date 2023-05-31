@@ -7,5 +7,5 @@
 * Add background music
 * ~~Add skybox~~
 * ~~Make Luna evolve around Earth and tidally lock it to the latter's axial rotation~~
-* Add rings to Neptune
+* ~~Add rings to Neptune~~
 * Figure out how to use a lambda to call makePlane N times to reduce repetitive code

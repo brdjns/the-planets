@@ -5,7 +5,6 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { arraySlice } from "three/src/animation/AnimationUtils";
 import anime from "animejs/lib/anime.es.js";
 
 // Animate backgrounds.
@@ -636,7 +635,7 @@ window.addEventListener("mousemove", (e) => {
             /* 
                We want to gradually change the intensity from 1 to 2.
                We adopt the following scheme, where t == level of transparency:
-            
+
                1 * (1-t) + 2 * t
                1 * (1-0) + 2 * 0     = 1    <-- value at the animation's start
                1 * (1-0.5) + 2 * 0.5 = 1.5  <-- value at the animation's midpoint
@@ -664,10 +663,26 @@ window.addEventListener("mousemove", (e) => {
     // Elapsed time since the last frame.
     let delta = clock.getDelta();
 
+    // Rotational speeds are relative to Earth's.
+    //
+    // If a planet's rotational speed is slower than Earth's, we divide Earth's
+    // speed by a factor; if faster than Earth's, we multiply it by a factor.
+    // These factors are based on each planet's sidereal rotational period (the
+    // length of each planet's day in Earth hours). 
+    //
+    // I've sped up Venus and Mercury up since their rotational periods are so
+    // slow relative to Earth that they wouldn't appear to rotate at all if I
+    // was aiming for realism.
+    //
+    // Axial rotation is relative to the sun.
+    //
+    // We add to the Y axis if a planet rotates clockwise on its axis, and
+    // subtract if a planet rotates counterclockwise.
+
     earth.rotation.y += ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
-    mercury.rotation.y += ROTATIONAL_SPEED / 2;
-    venus.rotation.y -= ROTATIONAL_SPEED / 1.8;
-    mars.rotation.y += ROTATIONAL_SPEED * 1.3;
+    mercury.rotation.y += ROTATIONAL_SPEED / 1.6;
+    venus.rotation.y -= ROTATIONAL_SPEED / 2.5;
+    mars.rotation.y += ROTATIONAL_SPEED;
     jupiter.rotation.y += ROTATIONAL_SPEED * 2.4;
     saturn.rotation.z += ROTATIONAL_SPEED * 2.3;
     uranus.rotation.y -= ROTATIONAL_SPEED * 1.4;

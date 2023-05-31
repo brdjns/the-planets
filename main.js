@@ -40,8 +40,9 @@ camera.position.set(902, -946, -732);
 // Starfield.
 //
 
+/*
 // Load a textured skybox as a background.
-/* const skyLoader = new THREE.CubeTextureLoader();
+const skyLoader = new THREE.CubeTextureLoader();
 scene.background = skyLoader.load([
   "assets/images/starfield.png",
   "assets/images/starfield.png",
@@ -49,7 +50,8 @@ scene.background = skyLoader.load([
   "assets/images/starfield.png",
   "assets/images/starfield.png",
   "assets/images/starfield.png",
-]); */
+]);
+*/
 
 const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
 
@@ -60,7 +62,7 @@ const vertices = new Float32Array(PARTICLE_COUNT * 3);
 // Loop through all vertices and randomize their positions.
 // Also, centre starfield and disperse across entire screen.
 for (let i = 0; i < PARTICLE_COUNT * 3; ++i) {
-  vertices[i] = (Math.random() - 0.5) * DISPERSION_FACTOR; // get values in range [-50:50]
+  vertices[i] = (Math.random() - 0.5) * (Math.random() * DISPERSION_FACTOR);
 }
 
 // Geometry for stars.
@@ -86,11 +88,11 @@ const particleMaterial = new THREE.PointsMaterial({
 const particleMesh = new THREE.Points(particleGeometry, particleMaterial);
 scene.add(particleMesh);
 
+/* 
 //
 // Rings
 //
 
-/* 
 const ringScene = new THREE.Scene();
 const ringsCamera = new THREE.PerspectiveCamera(
   50,
@@ -100,6 +102,7 @@ const ringsCamera = new THREE.PerspectiveCamera(
 );
 ringsCamera.position.set(0, 0, 20); 
 */
+
 
 //
 // Audio
@@ -195,9 +198,7 @@ moonLight.shadow.camera.top = 10;
 moonLight.shadow.camera.right = 10;
 scene.add(moonLight);
 
-/* const helper = new THREE.CameraHelper(light.shadow.camera);
-scene.add(helper); */
-
+// Record the mouse position.
 let mousePos = new THREE.Vector2(0, 0);
 
 // Zero X and Y coördinates when the mouse is centred on the screen.
@@ -216,6 +217,7 @@ window.addEventListener("mousemove", (e) => {
     .setDataType(THREE.FloatType)
     .loadAsync("assets/hdri/abandoned_construction_4k.hdr");
   let envMap = pmrem.fromEquirectangular(envmapTexture).texture;
+
 /*
   // Rings.
   const ring1 = new THREE.Mesh(
@@ -269,7 +271,7 @@ window.addEventListener("mousemove", (e) => {
   ring3.sunOpacity = 0.35;
   ring3.moonOpacity = 0.03;
   ringScene.add(ring3); 
-  */
+*/
 
   //
   // Planetary textures.
@@ -767,7 +769,8 @@ window.addEventListener("mousemove", (e) => {
     renderer.autoClear = false; // don't clear screen before next render
     renderer.render(ringScene, ringsCamera);
     renderer.autoClear = true;
-    */
+*/
+    
   });
 })();
 

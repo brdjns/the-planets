@@ -429,10 +429,6 @@ window.addEventListener("mousemove", (e) => {
     })
   );
   mercury.position.set(140, -6, 0);
-  mercury.rotateOnWorldAxis(
-    new THREE.Vector3(randomize(), randomize()).normalize(),
-    24.5
-  );
   mercury.sunEnvIntensity = 0.4;
   mercury.MoonEnvIntensity = 0.1;
   mercury.receiveShadow = true;
@@ -451,11 +447,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.5,
     })
   );
-  venus.position.set(100, -3, 0);
-  venus.rotateOnWorldAxis(
-    new THREE.Vector3(randomize(), randomize()).normalize(),
-    17.5
-  );
+  venus.position.set(100, 3, 0);
   venus.sunEnvIntensity = 0.4;
   venus.MoonEnvIntensity = 0.1;
   venus.receiveShadow = true;
@@ -513,6 +505,10 @@ window.addEventListener("mousemove", (e) => {
     })
   );
   saturn.position.set(-290, 20, 3);
+  saturn.rotateOnWorldAxis(
+    new THREE.Vector3(randomize(), 0.03).normalize(),
+    17.5
+  );
   saturn.sunEnvIntensity = 0.4;
   saturn.MoonEnvIntensity = 0.1;
   saturn.receiveShadow = true;
@@ -668,7 +664,7 @@ window.addEventListener("mousemove", (e) => {
     // If a planet's rotational speed is slower than Earth's, we divide Earth's
     // speed by a factor; if faster than Earth's, we multiply it by a factor.
     // These factors are based on each planet's sidereal rotational period (the
-    // length of each planet's day in Earth hours). 
+    // length of each planet's day in Earth hours).
     //
     // I've sped up Venus and Mercury up since their rotational periods are so
     // slow relative to Earth that they wouldn't appear to rotate at all if I

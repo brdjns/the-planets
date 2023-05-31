@@ -90,6 +90,7 @@ scene.add(particleMesh);
 // Rings
 //
 
+/* 
 const ringScene = new THREE.Scene();
 const ringsCamera = new THREE.PerspectiveCamera(
   50,
@@ -97,7 +98,8 @@ const ringsCamera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-ringsCamera.position.set(0, 0, 20);
+ringsCamera.position.set(0, 0, 20); 
+*/
 
 //
 // Audio
@@ -214,7 +216,7 @@ window.addEventListener("mousemove", (e) => {
     .setDataType(THREE.FloatType)
     .loadAsync("assets/hdri/abandoned_construction_4k.hdr");
   let envMap = pmrem.fromEquirectangular(envmapTexture).texture;
-
+/*
   // Rings.
   const ring1 = new THREE.Mesh(
     new THREE.RingGeometry(15, 13.5, 80, 1, 0),
@@ -266,7 +268,8 @@ window.addEventListener("mousemove", (e) => {
   // Change opacity of rings when doing night/day transition.
   ring3.sunOpacity = 0.35;
   ring3.moonOpacity = 0.03;
-  ringScene.add(ring3);
+  ringScene.add(ring3); 
+  */
 
   //
   // Planetary textures.
@@ -745,6 +748,7 @@ window.addEventListener("mousemove", (e) => {
     controls.update();
     renderer.render(scene, camera);
 
+/*   
     // Rotate each ring by a value that depends on the mouse position.
     // Take 95% of the previous value stored in 'x' and add 5% of mouse
     // position along the Y axis.
@@ -763,6 +767,7 @@ window.addEventListener("mousemove", (e) => {
     renderer.autoClear = false; // don't clear screen before next render
     renderer.render(ringScene, ringsCamera);
     renderer.autoClear = true;
+    */
   });
 })();
 

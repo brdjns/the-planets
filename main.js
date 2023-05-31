@@ -337,6 +337,12 @@ window.addEventListener("mousemove", (e) => {
     ),
   };
 
+  let uranusTextures = {
+    map: await new THREE.TextureLoader().loadAsync(
+      "assets/images/uranusmap.jpg"
+    ),
+  };
+
   // Select fire mesh of our plane.
   let plane = (await new GLTFLoader().loadAsync("assets/glb/plane.glb")).scene
     .children[0];
@@ -507,7 +513,7 @@ window.addEventListener("mousemove", (e) => {
   saturn.receiveShadow = true;
   scene.add(saturn);
 
-  // Render Saturn.
+  // Render Saturn's rings.
   let saturnRing = new THREE.Mesh(
     new THREE.RingGeometry(30, 60, 70),
     new THREE.MeshPhysicalMaterial({
@@ -521,11 +527,29 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.2,
     })
   );
-  //saturnRing.position.set(-290, 20, 3);
   saturnRing.sunEnvIntensity = 0.4;
   saturnRing.MoonEnvIntensity = 0.1;
   saturnRing.receiveShadow = true;
   saturn.add(saturnRing);
+
+  // Render Uranus.
+  let uranus = new THREE.Mesh(
+    new THREE.SphereGeometry(25, 70, 70),
+    new THREE.MeshPhysicalMaterial({
+      map: uranusTextures.map,
+      envMap,
+      envMapIntensity: 1.0,
+      sheen: 0.2,
+      sheenRoughness: 1.4,
+      sheenColor: new THREE.Color("#696e46").convertSRGBToLinear(),
+      clearcoat: 0.2,
+    })
+  );
+  uranus.position.set(-420, 20, 0);
+  uranus.sunEnvIntensity = 0.4;
+  uranus.MoonEnvIntensity = 0.1;
+  uranus.receiveShadow = true;
+  scene.add(uranus);
 
   let clock = new THREE.Clock();
 
@@ -620,6 +644,7 @@ window.addEventListener("mousemove", (e) => {
     venus.rotation.y += ROTATIONAL_SPEED / 1.8;
     mars.rotation.y += ROTATIONAL_SPEED * 1.3;
     jupiter.rotation.y += ROTATIONAL_SPEED * 2.4;
+    uranus.rotation.y += ROTATIONAL_SPEED * 1.4;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

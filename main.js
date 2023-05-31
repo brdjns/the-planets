@@ -644,6 +644,7 @@ window.addEventListener("mousemove", (e) => {
     venus.rotation.y += ROTATIONAL_SPEED / 1.8;
     mars.rotation.y += ROTATIONAL_SPEED * 1.3;
     jupiter.rotation.y += ROTATIONAL_SPEED * 2.4;
+    saturn.rotation.z += ROTATIONAL_SPEED * 2.3;
     uranus.rotation.y += ROTATIONAL_SPEED * 1.4;
 
     // Reset the position + rotation of every group every time we rerender the

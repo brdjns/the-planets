@@ -19,17 +19,18 @@ const MOUSE_X_OFFSET = 0.0003; // offset for mouse position on X axis
 const DAMP_FACTOR = 0.05; // control damping factor
 const PIXELS_LEFT_EDGE = 200; // number of pixels from left screen edge
 const PIXELS_RIGHT_EDGE = 200; // number of pixels from right screen edge
-const DISPERSION_FACTOR = 1000; // factor of 10 used to disperse starfield
+const DISPERSION_FACTOR = 10000; // factor of 10 used to disperse starfield
+const PARTICLE_COUNT = 1000000; // number of stars to generate (actual number is N/3)
 
 // Create a new scene.
 const scene = new THREE.Scene();
 
 // Set the type of camera we wish to use.
 const camera = new THREE.PerspectiveCamera(
-  75, // field of view
+  90, // field of view
   window.innerWidth / window.innerHeight, // screen aspect ratio
   0.1, // closest object that can be rendered
-  1000 // farthest object that can be rendered
+  10000 // farthest object that can be rendered
 );
 
 // Move the camera above and farther way from the screen's centre.
@@ -52,16 +53,16 @@ scene.background = skyLoader.load([
 
 const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
 
-// The number of stars to generate (actual count is N/3 where N == particle count).
-const particleCount = 15000;
+
+
 
 // Each star is made up of a vertex. The array holds three values (as X,Y,Z
 // coordinates) per vertex.
-const vertices = new Float32Array(particleCount * 3);
+const vertices = new Float32Array(PARTICLE_COUNT * 3);
 
 // Loop through all vertices and randomize their positions.
 // Also, centre starfield and disperse across entire screen.
-for (let i = 0; i < particleCount * 3; ++i) {
+for (let i = 0; i < PARTICLE_COUNT * 3; ++i) {
   vertices[i] = (Math.random() - 0.5) * DISPERSION_FACTOR; // get values in range [-50:50]
 }
 
@@ -394,7 +395,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Luna.
   let luna = new THREE.Mesh(
-    new THREE.SphereGeometry(2, 70, 70),
+    new THREE.SphereGeometry(2.73, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: moonTextures.map, // sphere base colour
       bumpMap: moonTextures.bump, // make texture surface uneven
@@ -415,7 +416,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Mercury.
   let mercury = new THREE.Mesh(
-    new THREE.SphereGeometry(2.2, 70, 70),
+    new THREE.SphereGeometry(3.83, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: mercuryTextures.map, // sphere base colour
       bumpMap: moonTextures.bump, // make texture surface uneven
@@ -436,7 +437,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Venus.
   let venus = new THREE.Mesh(
-    new THREE.SphereGeometry(9.0, 70, 70),
+    new THREE.SphereGeometry(9.50, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: venusTextures.map,
       envMap,
@@ -455,7 +456,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Mars.
   let mars = new THREE.Mesh(
-    new THREE.SphereGeometry(4, 70, 70),
+    new THREE.SphereGeometry(5.32, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: marsTextures.map,
       envMap,
@@ -474,7 +475,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Jupiter.
   let jupiter = new THREE.Mesh(
-    new THREE.SphereGeometry(50, 70, 70),
+    new THREE.SphereGeometry(109.73, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: jupiterTextures.map,
       envMap,
@@ -485,7 +486,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.2,
     })
   );
-  jupiter.position.set(-160, 20, 3);
+  jupiter.position.set(-280, 20, 3);
   jupiter.sunEnvIntensity = 0.4;
   jupiter.MoonEnvIntensity = 0.1;
   jupiter.receiveShadow = true;
@@ -493,7 +494,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Saturn.
   let saturn = new THREE.Mesh(
-    new THREE.SphereGeometry(30, 70, 70),
+    new THREE.SphereGeometry(91.4, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: saturnTextures.map,
       envMap,
@@ -504,7 +505,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.2,
     })
   );
-  saturn.position.set(-320, 20, 3);
+  saturn.position.set(-700, 20, 3);
   saturn.rotateOnWorldAxis(
     new THREE.Vector3(randomize(), 0.03).normalize(),
     17.5
@@ -516,7 +517,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Saturn's rings.
   let saturnRing = new THREE.Mesh(
-    new THREE.RingGeometry(30, 60, 70),
+    new THREE.RingGeometry(91.4, 182.8, 70),
     new THREE.MeshPhysicalMaterial({
       map: saturnRingTextures.map,
       side: THREE.DoubleSide,
@@ -535,7 +536,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Uranus.
   let uranus = new THREE.Mesh(
-    new THREE.SphereGeometry(25, 70, 70),
+    new THREE.SphereGeometry(39.81, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: uranusTextures.map,
       envMap,
@@ -546,7 +547,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.2,
     })
   );
-  uranus.position.set(-460, 20, 0);
+  uranus.position.set(-1000, 20, 0);
   uranus.sunEnvIntensity = 0.4;
   uranus.MoonEnvIntensity = 0.1;
   uranus.receiveShadow = true;
@@ -554,7 +555,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Neptune.
   let neptune = new THREE.Mesh(
-    new THREE.SphereGeometry(25, 70, 70),
+    new THREE.SphereGeometry(38.65, 70, 70),
     new THREE.MeshPhysicalMaterial({
       map: neptuneTextures.map,
       envMap,
@@ -565,7 +566,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.4,
     })
   );
-  neptune.position.set(-560, 20, 0);
+  neptune.position.set(-1160, 20, 0);
   neptune.sunEnvIntensity = 0.4;
   neptune.MoonEnvIntensity = 0.1;
   neptune.receiveShadow = true;

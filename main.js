@@ -428,7 +428,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.5,
     })
   );
-  mercury.position.set(140, -6, 0);
+  mercury.position.set(140, 3, 0);
   mercury.sunEnvIntensity = 0.4;
   mercury.MoonEnvIntensity = 0.1;
   mercury.receiveShadow = true;
@@ -504,7 +504,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.2,
     })
   );
-  saturn.position.set(-290, 20, 3);
+  saturn.position.set(-320, 20, 3);
   saturn.rotateOnWorldAxis(
     new THREE.Vector3(randomize(), 0.03).normalize(),
     17.5
@@ -546,7 +546,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.2,
     })
   );
-  uranus.position.set(-420, 20, 0);
+  uranus.position.set(-460, 20, 0);
   uranus.sunEnvIntensity = 0.4;
   uranus.MoonEnvIntensity = 0.1;
   uranus.receiveShadow = true;
@@ -565,7 +565,7 @@ window.addEventListener("mousemove", (e) => {
       clearcoat: 0.4,
     })
   );
-  neptune.position.set(-520, 20, 0);
+  neptune.position.set(-560, 20, 0);
   neptune.sunEnvIntensity = 0.4;
   neptune.MoonEnvIntensity = 0.1;
   neptune.receiveShadow = true;

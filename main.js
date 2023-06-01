@@ -468,7 +468,7 @@ window.addEventListener("mousemove", (e) => {
 
   // Render Saturnian rings.
   let saturnRing = new THREE.Mesh(
-    new THREE.RingGeometry(91.4, 182.8, 70),
+    new THREE.RingGeometry(111.4, 182.8, 70),
     new THREE.MeshPhysicalMaterial({
       map: saturnRingTextures.map,
       side: THREE.DoubleSide,
@@ -478,6 +478,8 @@ window.addEventListener("mousemove", (e) => {
       sheenRoughness: 1.4,
       sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
+      transparent: true,
+      opacity: 0.4,
     })
   );
   saturnRing.sunEnvIntensity = 0.4;
@@ -517,6 +519,8 @@ window.addEventListener("mousemove", (e) => {
       sheenRoughness: 1.4,
       sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
+      transparent: true,
+      opacity: 0.3,
     })
   );
   uranusRing.sunEnvIntensity = 0.4;
@@ -845,16 +849,9 @@ window.addEventListener("mousemove", (e) => {
 
   // Create a folder to house camera controls.
   const cameraFolder = gui.addFolder("Planetary Camera");
-
-  cameraFolder
-    .add(camera.position, "x", constant.LOWER, 10_000)
-    .name("X Axis");
-  cameraFolder
-    .add(camera.position, "y", constant.LOWER, 10_000)
-    .name("Y Axis");
-  cameraFolder
-    .add(camera.position, "z", constant.LOWER, 10_000)
-    .name("Z Axis");
+  cameraFolder.add(camera.position, "x", constant.LOWER, 10_000).name("X Axis");
+  cameraFolder.add(camera.position, "y", constant.LOWER, 10_000).name("Y Axis");
+  cameraFolder.add(camera.position, "z", constant.LOWER, 10_000).name("Z Axis");
 
   ///////////////////////////////////////////////////////////////////////////
 

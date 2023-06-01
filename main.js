@@ -14,15 +14,19 @@ let sunBackground = document.querySelector(".sun-background");
 let moonBackground = document.querySelector(".moon-background");
 
 // Constants.
-const MINIMUM_RADIUS = 0.2; // minimum radius for a plane to circle
-const ROTATIONAL_SPEED = 0.002; // speed of planetary axial rotation
-const MOUSE_Y_OFFSET = 0.0003; // offset for mouse position on Y axis
-const MOUSE_X_OFFSET = 0.0003; // offset for mouse position on X axis
-const DAMP_FACTOR = 0.05; // control damping factor
-const PIXELS_LEFT_EDGE = 200; // number of pixels from left screen edge
-const PIXELS_RIGHT_EDGE = 200; // number of pixels from right screen edge
-const DISPERSION_FACTOR = 10_000; // factor of 10 used to disperse starfield
-const PARTICLE_COUNT = 1_000_000; // number of stars to generate (actual number is N/3)
+const constant = {
+  MINIMUM_RADIUS: 0.2, // minimum radius for a plane to circle
+  ROTATIONAL_SPEED: 0.002, // speed of planetary axial rotation
+  MOUSE_Y_OFFSET: 0.0003, // offset for mouse position on Y axis
+  MOUSE_X_OFFSET: 0.0003, // offset for mouse position on X axis
+  DAMP_FACTOR: 0.05, // control damping factor
+  PIXELS_LEFT_EDGE: 200, // number of pixels from left screen edge
+  PIXELS_RIGHT_EDGE: 200, // number of pixels from right screen edge
+  DISPERSION_FACTOR: 10_000, // factor of 10 used to disperse starfield
+  PARTICLE_COUNT: 1_000_000, // number of stars to generate (actual number is N/3)
+  LOWER: 0, // lower limit for planetary geometry controls
+  UPPER: 2, // upper limit for planetary geometry controls
+}
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -59,12 +63,12 @@ const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
 
 // Each star is made up of a vertex. The array holds three values (as X,Y,Z
 // coordinates) per vertex.
-const vertices = new Float32Array(PARTICLE_COUNT * 3);
+const vertices = new Float32Array(constant.PARTICLE_COUNT * 3);
 
 // Loop through all vertices and randomize their positions.
 // Also, centre starfield and disperse across entire screen.
-for (let i = 0; i < PARTICLE_COUNT * 3; ++i) {
-  vertices[i] = (Math.random() - 0.5) * (Math.random() * DISPERSION_FACTOR);
+for (let i = 0; i < constant.PARTICLE_COUNT * 3; ++i) {
+  vertices[i] = (Math.random() - 0.5) * (Math.random() * constant.DISPERSION_FACTOR);
 }
 
 // Geometry for stars.
@@ -169,7 +173,7 @@ document.body.appendChild(stats.dom);
 // Add controls.
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 0, 0); // centre the scene
-controls.dampingFactor = DAMP_FACTOR;
+controls.dampingFactor = constant.DAMP_FACTOR;
 controls.enableDamping = true; // inertia!
 
 // Sunlight properties.
@@ -211,8 +215,8 @@ window.addEventListener("mousemove", (e) => {
   let x = e.clientX - window.innerWidth * 0.5;
   let y = e.clientY - window.innerHeight * 0.5;
 
-  mousePos.x = x * MOUSE_X_OFFSET;
-  mousePos.y = y * MOUSE_Y_OFFSET;
+  mousePos.x = x * constant.MOUSE_X_OFFSET;
+  mousePos.y = y * constant.MOUSE_Y_OFFSET;
 });
 
 // Animation loop as an asynchronous function.
@@ -612,9 +616,6 @@ window.addEventListener("mousemove", (e) => {
   // Initialise the GUI.
   const gui = new GUI();
 
-  const LOWER = 0;
-  const UPPER = 2;
-
   // Create a folder to hold geometry controls.
   const geometryFolder = gui.addFolder("Planetary Geometry");
   geometryFolder.open();
@@ -627,126 +628,126 @@ window.addEventListener("mousemove", (e) => {
 
   // Mercury.
   rotationFolder
-    .add(mercury.rotation, "x", LOWER, Math.PI)
+    .add(mercury.rotation, "x", constant.LOWER, Math.PI)
     .name("Mercury X Axis");
   rotationFolder
-    .add(mercury.rotation, "y", LOWER, Math.PI)
+    .add(mercury.rotation, "y", constant.LOWER, Math.PI)
     .name("Mercury Y Axis");
   rotationFolder
-    .add(mercury.rotation, "z", LOWER, Math.PI)
+    .add(mercury.rotation, "z", constant.LOWER, Math.PI)
     .name("Mercury Z Axis");
 
   // Venus.
-  rotationFolder.add(venus.rotation, "x", LOWER, Math.PI).name("Venus X Axis");
-  rotationFolder.add(venus.rotation, "y", LOWER, Math.PI).name("Venus Y Axis");
-  rotationFolder.add(venus.rotation, "z", LOWER, Math.PI).name("Venus Z Axis");
+  rotationFolder.add(venus.rotation, "x", constant.LOWER, Math.PI).name("Venus X Axis");
+  rotationFolder.add(venus.rotation, "y", constant.LOWER, Math.PI).name("Venus Y Axis");
+  rotationFolder.add(venus.rotation, "z", constant.LOWER, Math.PI).name("Venus Z Axis");
 
   // Earth.
-  rotationFolder.add(earth.rotation, "x", LOWER, Math.PI).name("Earth X Axis");
-  rotationFolder.add(earth.rotation, "y", LOWER, Math.PI).name("Earth Y Axis");
-  rotationFolder.add(earth.rotation, "z", LOWER, Math.PI).name("Earth Z Axis");
+  rotationFolder.add(earth.rotation, "x", constant.LOWER, Math.PI).name("Earth X Axis");
+  rotationFolder.add(earth.rotation, "y", constant.LOWER, Math.PI).name("Earth Y Axis");
+  rotationFolder.add(earth.rotation, "z", constant.LOWER, Math.PI).name("Earth Z Axis");
 
   // Luna.
-  rotationFolder.add(luna.rotation, "x", LOWER, Math.PI).name("Luna X Axis");
-  rotationFolder.add(luna.rotation, "y", LOWER, Math.PI).name("Luna Y Axis");
-  rotationFolder.add(luna.rotation, "z", LOWER, Math.PI).name("Luna Z Axis");
+  rotationFolder.add(luna.rotation, "x", constant.LOWER, Math.PI).name("Luna X Axis");
+  rotationFolder.add(luna.rotation, "y", constant.LOWER, Math.PI).name("Luna Y Axis");
+  rotationFolder.add(luna.rotation, "z", constant.LOWER, Math.PI).name("Luna Z Axis");
 
   // Mars.
-  rotationFolder.add(mars.rotation, "x", LOWER, Math.PI).name("Mars X Axis");
-  rotationFolder.add(mars.rotation, "y", LOWER, Math.PI).name("Mars Y Axis");
-  rotationFolder.add(mars.rotation, "z", LOWER, Math.PI).name("Mars Z Axis");
+  rotationFolder.add(mars.rotation, "x", constant.LOWER, Math.PI).name("Mars X Axis");
+  rotationFolder.add(mars.rotation, "y", constant.LOWER, Math.PI).name("Mars Y Axis");
+  rotationFolder.add(mars.rotation, "z", constant.LOWER, Math.PI).name("Mars Z Axis");
 
   // Jupiter.
   rotationFolder
-    .add(jupiter.rotation, "x", LOWER, Math.PI)
+    .add(jupiter.rotation, "x", constant.LOWER, Math.PI)
     .name("Jupiter X Axis");
   rotationFolder
-    .add(jupiter.rotation, "y", LOWER, Math.PI)
+    .add(jupiter.rotation, "y", constant.LOWER, Math.PI)
     .name("Jupiter Y Axis");
   rotationFolder
-    .add(jupiter.rotation, "z", LOWER, Math.PI)
+    .add(jupiter.rotation, "z", constant.LOWER, Math.PI)
     .name("Jupiter Z Axis");
 
   // Saturn.
   rotationFolder
-    .add(saturn.rotation, "x", LOWER, Math.PI)
+    .add(saturn.rotation, "x", constant.LOWER, Math.PI)
     .name("Saturn X Axis");
   rotationFolder
-    .add(saturn.rotation, "y", LOWER, Math.PI)
+    .add(saturn.rotation, "y", constant.LOWER, Math.PI)
     .name("Saturn Y Axis");
   rotationFolder
-    .add(saturn.rotation, "z", LOWER, Math.PI)
+    .add(saturn.rotation, "z", constant.LOWER, Math.PI)
     .name("Saturn Z Axis");
 
   // Uranus.
   rotationFolder
-    .add(uranus.rotation, "x", LOWER, Math.PI)
+    .add(uranus.rotation, "x", constant.LOWER, Math.PI)
     .name("Uranus X Axis");
   rotationFolder
-    .add(uranus.rotation, "y", LOWER, Math.PI)
+    .add(uranus.rotation, "y", constant.LOWER, Math.PI)
     .name("Uranus Y Axis");
   rotationFolder
-    .add(uranus.rotation, "z", LOWER, Math.PI)
+    .add(uranus.rotation, "z", constant.LOWER, Math.PI)
     .name("Uranus Z Axis");
 
   // Neptune.
   rotationFolder
-    .add(neptune.rotation, "x", LOWER, Math.PI)
+    .add(neptune.rotation, "x", constant.LOWER, Math.PI)
     .name("Neptune X Axis");
   rotationFolder
-    .add(neptune.rotation, "y", LOWER, Math.PI)
+    .add(neptune.rotation, "y", constant.LOWER, Math.PI)
     .name("Neptune Y Axis");
   rotationFolder
-    .add(neptune.rotation, "z", LOWER, Math.PI)
+    .add(neptune.rotation, "z", constant.LOWER, Math.PI)
     .name("Neptune Z Axis");
 
   // Create a foler to house planetary scale controls.
   const scaleFolder = geometryFolder.addFolder("Planetary Scale");
 
   // Mercury.
-  scaleFolder.add(mercury.scale, "x", LOWER, UPPER).name("Mercury X Axis");
-  scaleFolder.add(mercury.scale, "y", LOWER, UPPER).name("Mercury Y Axis");
-  scaleFolder.add(mercury.scale, "z", LOWER, UPPER).name("Mercury Z Axis");
+  scaleFolder.add(mercury.scale, "x", constant.LOWER, constant.UPPER).name("Mercury X Axis");
+  scaleFolder.add(mercury.scale, "y", constant.LOWER, constant.UPPER).name("Mercury Y Axis");
+  scaleFolder.add(mercury.scale, "z", constant.LOWER, constant.UPPER).name("Mercury Z Axis");
 
   // Venus.
-  scaleFolder.add(venus.scale, "x", LOWER, UPPER).name("Venus X Axis");
-  scaleFolder.add(venus.scale, "y", LOWER, UPPER).name("Venus Y Axis");
-  scaleFolder.add(venus.scale, "z", LOWER, UPPER).name("Venus Z Axis");
+  scaleFolder.add(venus.scale, "x", constant.LOWER, constant.UPPER).name("Venus X Axis");
+  scaleFolder.add(venus.scale, "y", constant.LOWER, constant.UPPER).name("Venus Y Axis");
+  scaleFolder.add(venus.scale, "z", constant.LOWER, constant.UPPER).name("Venus Z Axis");
 
   // Earth.
-  scaleFolder.add(earth.scale, "x", LOWER, UPPER).name("Earth X Axis");
-  scaleFolder.add(earth.scale, "y", LOWER, UPPER).name("Earth Y Axis");
-  scaleFolder.add(earth.scale, "z", LOWER, UPPER).name("Earth Z Axis");
+  scaleFolder.add(earth.scale, "x", constant.LOWER, constant.UPPER).name("Earth X Axis");
+  scaleFolder.add(earth.scale, "y", constant.LOWER, constant.UPPER).name("Earth Y Axis");
+  scaleFolder.add(earth.scale, "z", constant.LOWER, constant.UPPER).name("Earth Z Axis");
 
   // Luna.
-  scaleFolder.add(luna.scale, "x", LOWER, UPPER).name("Luna X Axis");
-  scaleFolder.add(luna.scale, "y", LOWER, UPPER).name("Luna Y Axis");
-  scaleFolder.add(luna.scale, "z", LOWER, UPPER).name("Luna Z Axis");
+  scaleFolder.add(luna.scale, "x", constant.LOWER, constant.UPPER).name("Luna X Axis");
+  scaleFolder.add(luna.scale, "y", constant.LOWER, constant.UPPER).name("Luna Y Axis");
+  scaleFolder.add(luna.scale, "z", constant.LOWER, constant.UPPER).name("Luna Z Axis");
 
   // Mars.
-  scaleFolder.add(mars.scale, "x", LOWER, UPPER).name("Mars X Axis");
-  scaleFolder.add(mars.scale, "y", LOWER, UPPER).name("Mars Y Axis");
-  scaleFolder.add(mars.scale, "z", LOWER, UPPER).name("Mars Z Axis");
+  scaleFolder.add(mars.scale, "x", constant.LOWER, constant.UPPER).name("Mars X Axis");
+  scaleFolder.add(mars.scale, "y", constant.LOWER, constant.UPPER).name("Mars Y Axis");
+  scaleFolder.add(mars.scale, "z", constant.LOWER, constant.UPPER).name("Mars Z Axis");
 
   // Jupiter.
-  scaleFolder.add(jupiter.scale, "x", LOWER, UPPER).name("Jupiter X Axis");
-  scaleFolder.add(jupiter.scale, "y", LOWER, UPPER).name("Jupiter Y Axis");
-  scaleFolder.add(jupiter.scale, "z", LOWER, UPPER).name("Jupiter Z Axis");
+  scaleFolder.add(jupiter.scale, "x", constant.LOWER, constant.UPPER).name("Jupiter X Axis");
+  scaleFolder.add(jupiter.scale, "y", constant.LOWER, constant.UPPER).name("Jupiter Y Axis");
+  scaleFolder.add(jupiter.scale, "z", constant.LOWER, constant.UPPER).name("Jupiter Z Axis");
 
   // Saturn.
-  scaleFolder.add(saturn.scale, "x", LOWER, UPPER).name("Saturn X Axis");
-  scaleFolder.add(saturn.scale, "y", LOWER, UPPER).name("Saturn Y Axis");
-  scaleFolder.add(saturn.scale, "z", LOWER, UPPER).name("Saturn Z Axis");
+  scaleFolder.add(saturn.scale, "x", constant.LOWER, constant.UPPER).name("Saturn X Axis");
+  scaleFolder.add(saturn.scale, "y", constant.LOWER, constant.UPPER).name("Saturn Y Axis");
+  scaleFolder.add(saturn.scale, "z", constant.LOWER, constant.UPPER).name("Saturn Z Axis");
 
   // Uranus.
-  scaleFolder.add(uranus.scale, "x", LOWER, UPPER).name("Uranus X Axis");
-  scaleFolder.add(uranus.scale, "y", LOWER, UPPER).name("Uranus Y Axis");
-  scaleFolder.add(uranus.scale, "z", LOWER, UPPER).name("Uranus Z Axis");
+  scaleFolder.add(uranus.scale, "x", constant.LOWER, constant.UPPER).name("Uranus X Axis");
+  scaleFolder.add(uranus.scale, "y", constant.LOWER, constant.UPPER).name("Uranus Y Axis");
+  scaleFolder.add(uranus.scale, "z", constant.LOWER, constant.UPPER).name("Uranus Z Axis");
 
   // Neptune.
-  scaleFolder.add(neptune.scale, "x", LOWER, UPPER).name("Neptune X Axis");
-  scaleFolder.add(neptune.scale, "y", LOWER, UPPER).name("Neptune Y Axis");
-  scaleFolder.add(neptune.scale, "z", LOWER, UPPER).name("Neptune Z Axis");
+  scaleFolder.add(neptune.scale, "x", constant.LOWER, constant.UPPER).name("Neptune X Axis");
+  scaleFolder.add(neptune.scale, "y", constant.LOWER, constant.UPPER).name("Neptune Y Axis");
+  scaleFolder.add(neptune.scale, "z", constant.LOWER, constant.UPPER).name("Neptune Z Axis");
 
   // Create a folder to house planetary material controls.
   const materialFolder = gui.addFolder("Planetary Material");
@@ -856,9 +857,9 @@ window.addEventListener("mousemove", (e) => {
     // screen-edge and it's nighttime.
 
     let anim = undefined;
-    if (event.clientX > window.innerWidth - PIXELS_RIGHT_EDGE && !daytime) {
+    if (event.clientX > window.innerWidth - constant.PIXELS_RIGHT_EDGE && !daytime) {
       anim = [1, 0]; // become daytime
-    } else if (event.clientX < PIXELS_LEFT_EDGE && daytime) {
+    } else if (event.clientX < constant.PIXELS_LEFT_EDGE && daytime) {
       anim = [0, 1]; // become nighttime
     } else {
       return; // do nothing: cursor is at neither screen edge
@@ -940,14 +941,14 @@ window.addEventListener("mousemove", (e) => {
     // We add to the Y axis if a planet rotates clockwise on its axis, and
     // subtract if a planet rotates counterclockwise.
 
-    earth.rotation.y += ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
-    mercury.rotation.y += ROTATIONAL_SPEED / 1.6;
-    venus.rotation.y -= ROTATIONAL_SPEED / 2.5;
-    mars.rotation.y += ROTATIONAL_SPEED;
-    jupiter.rotation.y += ROTATIONAL_SPEED * 2.4;
-    saturn.rotation.z += ROTATIONAL_SPEED * 2.3;
-    uranus.rotation.z -= ROTATIONAL_SPEED * 1.4;
-    neptune.rotation.y += ROTATIONAL_SPEED * 1.5;
+    earth.rotation.y += constant.ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
+    mercury.rotation.y += constant.ROTATIONAL_SPEED / 1.6;
+    venus.rotation.y -= constant.ROTATIONAL_SPEED / 2.5;
+    mars.rotation.y += constant.ROTATIONAL_SPEED;
+    jupiter.rotation.y += constant.ROTATIONAL_SPEED * 2.4;
+    saturn.rotation.z += constant.ROTATIONAL_SPEED * 2.3;
+    uranus.rotation.z -= constant.ROTATIONAL_SPEED * 1.4;
+    neptune.rotation.y += constant.ROTATIONAL_SPEED * 1.5;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.
@@ -1122,7 +1123,7 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
     group,
     // Set rotation between 0°-360°: 2πr circum. of a circle).
     rotation: Math.random() * Math.PI * 2.0,
-    radius: Math.random() * Math.PI * 0.45 + MINIMUM_RADIUS,
+    radius: Math.random() * Math.PI * 0.45 + constant.MINIMUM_RADIUS,
     yOffset: Math.random() * 1.0 + 10.5,
     // normalisation sets vector length to 1
     randomAxis: new THREE.Vector3(randomize(), randomize()).normalize(),

@@ -24,6 +24,7 @@ const constant = {
   PIXELS_RIGHT_EDGE: 200, // number of pixels from right screen edge
   DISPERSION_FACTOR: 10_000, // factor of 10 used to disperse starfield
   PARTICLE_COUNT: 1_000_000, // number of stars to generate (actual number is N/3)
+  VERTEX_POINTS: 3, // number of points in a vertex
   LOWER: 0, // lower limit for planetary geometry controls
   UPPER: 2, // upper limit for planetary geometry controls
 }
@@ -63,18 +64,18 @@ const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
 
 // Each star is made up of a vertex. The array holds three values (as X,Y,Z
 // coordinates) per vertex.
-const vertices = new Float32Array(constant.PARTICLE_COUNT * 3);
+const vertices = new Float32Array(constant.PARTICLE_COUNT * constant.VERTEX_POINTS);
 
 // Loop through all vertices and randomize their positions.
 // Also, centre starfield and disperse across entire screen.
-for (let i = 0; i < constant.PARTICLE_COUNT * 3; ++i) {
+for (let i = 0; i < constant.PARTICLE_COUNT * constant.VERTEX_POINTS; ++i) {
   vertices[i] = (Math.random() - 0.5) * (Math.random() * constant.DISPERSION_FACTOR);
 }
 
 // Geometry for stars.
 particleGeometry.setAttribute(
   "position",
-  new THREE.BufferAttribute(vertices, 3) // 3 values for each vertex
+  new THREE.BufferAttribute(vertices, constant.VERTEX_POINTS) // 3 values for each vertex
 );
 
 // Texture for stars.

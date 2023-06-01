@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { GUI } from "dat.gui";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 import anime from "animejs/lib/anime.es.js";
 
@@ -81,7 +82,7 @@ const particleMaterial = new THREE.PointsMaterial({
   map: particleTexture,
   size: 2, // star size
   sizeAttenuation: true, // star size reduces with camera distance
-  color: 0xFFF_FFF, // same as daytime background
+  color: 0xfff_fff, // same as daytime background
   transparent: true,
 });
 
@@ -103,7 +104,6 @@ const ringsCamera = new THREE.PerspectiveCamera(
 );
 ringsCamera.position.set(0, 0, 20); 
 */
-
 
 //
 // Audio
@@ -188,7 +188,7 @@ scene.add(sunLight);
 
 // Moonlight properties.
 const moonLight = new THREE.DirectionalLight(
-  new THREE.Color(0xFFF_FFF).convertLinearToSRGB(),
+  new THREE.Color(0xfff_fff).convertLinearToSRGB(),
   0
 );
 moonLight.position.set(-10, 20, 10); // position on top left-hand side of the screen
@@ -223,7 +223,7 @@ window.addEventListener("mousemove", (e) => {
     .loadAsync("assets/hdri/abandoned_construction_4k.hdr");
   let envMap = pmrem.fromEquirectangular(envmapTexture).texture;
 
-/*
+  /*
   // Rings.
   const ring1 = new THREE.Mesh(
     new THREE.RingGeometry(15, 13.5, 80, 1, 0),
@@ -390,7 +390,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0, // environmental map effect strength
       sheen: 1.4,
       sheenRoughness: 0.8,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -417,7 +417,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0, // environmental map effect strength
       sheen: 0.4,
       sheenRoughness: 1.0,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -438,7 +438,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0, // environmental map effect strength
       sheen: 0.4,
       sheenRoughness: 1.0,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -457,7 +457,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 1.4,
       sheenRoughness: 0.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -476,7 +476,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -495,7 +495,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -514,7 +514,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -538,7 +538,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -556,7 +556,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -577,7 +577,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -595,7 +595,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.4,
     })
   );
@@ -604,6 +604,234 @@ window.addEventListener("mousemove", (e) => {
   neptune.MoonEnvIntensity = 0.1;
   neptune.receiveShadow = true;
   scene.add(neptune);
+
+  //
+  // Controls.
+  //
+
+  // Initialise the GUI.
+  const gui = new GUI();
+
+  const LOWER = 0;
+  const UPPER = 2;
+
+  // Create a folder to hold geometry controls.
+  const geometryFolder = gui.addFolder("Planetary Geometry");
+  geometryFolder.open();
+
+  // Create a subfolder to house planetary rotation controls.
+  const rotationFolder = geometryFolder.addFolder("Planetary Rotation");
+
+  // Set parameters to control.
+  // We pass the third argument in radians when we rotate it. Range is [0:π].
+
+  // Mercury.
+  rotationFolder
+    .add(mercury.rotation, "x", LOWER, Math.PI)
+    .name("Mercury X Axis");
+  rotationFolder
+    .add(mercury.rotation, "y", LOWER, Math.PI)
+    .name("Mercury Y Axis");
+  rotationFolder
+    .add(mercury.rotation, "z", LOWER, Math.PI)
+    .name("Mercury Z Axis");
+
+  // Venus.
+  rotationFolder.add(venus.rotation, "x", LOWER, Math.PI).name("Venus X Axis");
+  rotationFolder.add(venus.rotation, "y", LOWER, Math.PI).name("Venus Y Axis");
+  rotationFolder.add(venus.rotation, "z", LOWER, Math.PI).name("Venus Z Axis");
+
+  // Earth.
+  rotationFolder.add(earth.rotation, "x", LOWER, Math.PI).name("Earth X Axis");
+  rotationFolder.add(earth.rotation, "y", LOWER, Math.PI).name("Earth Y Axis");
+  rotationFolder.add(earth.rotation, "z", LOWER, Math.PI).name("Earth Z Axis");
+
+  // Luna.
+  rotationFolder.add(luna.rotation, "x", LOWER, Math.PI).name("Luna X Axis");
+  rotationFolder.add(luna.rotation, "y", LOWER, Math.PI).name("Luna Y Axis");
+  rotationFolder.add(luna.rotation, "z", LOWER, Math.PI).name("Luna Z Axis");
+
+  // Mars.
+  rotationFolder.add(mars.rotation, "x", LOWER, Math.PI).name("Mars X Axis");
+  rotationFolder.add(mars.rotation, "y", LOWER, Math.PI).name("Mars Y Axis");
+  rotationFolder.add(mars.rotation, "z", LOWER, Math.PI).name("Mars Z Axis");
+
+  // Jupiter.
+  rotationFolder
+    .add(jupiter.rotation, "x", LOWER, Math.PI)
+    .name("Jupiter X Axis");
+  rotationFolder
+    .add(jupiter.rotation, "y", LOWER, Math.PI)
+    .name("Jupiter Y Axis");
+  rotationFolder
+    .add(jupiter.rotation, "z", LOWER, Math.PI)
+    .name("Jupiter Z Axis");
+
+  // Saturn.
+  rotationFolder
+    .add(saturn.rotation, "x", LOWER, Math.PI)
+    .name("Saturn X Axis");
+  rotationFolder
+    .add(saturn.rotation, "y", LOWER, Math.PI)
+    .name("Saturn Y Axis");
+  rotationFolder
+    .add(saturn.rotation, "z", LOWER, Math.PI)
+    .name("Saturn Z Axis");
+
+  // Uranus.
+  rotationFolder
+    .add(uranus.rotation, "x", LOWER, Math.PI)
+    .name("Uranus X Axis");
+  rotationFolder
+    .add(uranus.rotation, "y", LOWER, Math.PI)
+    .name("Uranus Y Axis");
+  rotationFolder
+    .add(uranus.rotation, "z", LOWER, Math.PI)
+    .name("Uranus Z Axis");
+
+  // Neptune.
+  rotationFolder
+    .add(neptune.rotation, "x", LOWER, Math.PI)
+    .name("Neptune X Axis");
+  rotationFolder
+    .add(neptune.rotation, "y", LOWER, Math.PI)
+    .name("Neptune Y Axis");
+  rotationFolder
+    .add(neptune.rotation, "z", LOWER, Math.PI)
+    .name("Neptune Z Axis");
+
+  // Create a foler to house planetary scale controls.
+  const scaleFolder = geometryFolder.addFolder("Planetary Scale");
+
+  // Mercury.
+  scaleFolder.add(mercury.scale, "x", LOWER, UPPER).name("Mercury X Axis");
+  scaleFolder.add(mercury.scale, "y", LOWER, UPPER).name("Mercury Y Axis");
+  scaleFolder.add(mercury.scale, "z", LOWER, UPPER).name("Mercury Z Axis");
+
+  // Venus.
+  scaleFolder.add(venus.scale, "x", LOWER, UPPER).name("Venus X Axis");
+  scaleFolder.add(venus.scale, "y", LOWER, UPPER).name("Venus Y Axis");
+  scaleFolder.add(venus.scale, "z", LOWER, UPPER).name("Venus Z Axis");
+
+  // Earth.
+  scaleFolder.add(earth.scale, "x", LOWER, UPPER).name("Earth X Axis");
+  scaleFolder.add(earth.scale, "y", LOWER, UPPER).name("Earth Y Axis");
+  scaleFolder.add(earth.scale, "z", LOWER, UPPER).name("Earth Z Axis");
+
+  // Luna.
+  scaleFolder.add(luna.scale, "x", LOWER, UPPER).name("Luna X Axis");
+  scaleFolder.add(luna.scale, "y", LOWER, UPPER).name("Luna Y Axis");
+  scaleFolder.add(luna.scale, "z", LOWER, UPPER).name("Luna Z Axis");
+
+  // Mars.
+  scaleFolder.add(mars.scale, "x", LOWER, UPPER).name("Mars X Axis");
+  scaleFolder.add(mars.scale, "y", LOWER, UPPER).name("Mars Y Axis");
+  scaleFolder.add(mars.scale, "z", LOWER, UPPER).name("Mars Z Axis");
+
+  // Jupiter.
+  scaleFolder.add(jupiter.scale, "x", LOWER, UPPER).name("Jupiter X Axis");
+  scaleFolder.add(jupiter.scale, "y", LOWER, UPPER).name("Jupiter Y Axis");
+  scaleFolder.add(jupiter.scale, "z", LOWER, UPPER).name("Jupiter Z Axis");
+
+  // Saturn.
+  scaleFolder.add(saturn.scale, "x", LOWER, UPPER).name("Saturn X Axis");
+  scaleFolder.add(saturn.scale, "y", LOWER, UPPER).name("Saturn Y Axis");
+  scaleFolder.add(saturn.scale, "z", LOWER, UPPER).name("Saturn Z Axis");
+
+  // Uranus.
+  scaleFolder.add(uranus.scale, "x", LOWER, UPPER).name("Uranus X Axis");
+  scaleFolder.add(uranus.scale, "y", LOWER, UPPER).name("Uranus Y Axis");
+  scaleFolder.add(uranus.scale, "z", LOWER, UPPER).name("Uranus Z Axis");
+
+  // Neptune.
+  scaleFolder.add(neptune.scale, "x", LOWER, UPPER).name("Neptune X Axis");
+  scaleFolder.add(neptune.scale, "y", LOWER, UPPER).name("Neptune Y Axis");
+  scaleFolder.add(neptune.scale, "z", LOWER, UPPER).name("Neptune Z Axis");
+
+  // Create a folder to house planetary material controls.
+  const materialFolder = gui.addFolder("Planetary Material");
+
+  // Mercury.
+  const mercuryMaterialFolder = materialFolder.addFolder("Mercury");
+  // Change colour and expose the wireframe for Mercury.
+  const mercuryMaterialParams = {
+    mercuryColor: mercury.material.color.getHex(),
+  };
+  // Expose Mercury's colour parameter and wireframe.
+  mercuryMaterialFolder.add(mercury.material, "wireframe");
+  mercuryMaterialFolder
+    .addColor(mercuryMaterialParams, "mercuryColor")
+    .onChange((value) => mercury.material.color.set(value));
+
+  // Venus.
+  const venusMaterialFolder = materialFolder.addFolder("Venus");
+  const venusMaterialParams = { venusColor: venus.material.color.getHex() };
+  venusMaterialFolder.add(venus.material, "wireframe");
+  venusMaterialFolder
+    .addColor(venusMaterialParams, "venusColor")
+    .onChange((value) => venus.material.color.set(value));
+
+  // Earth
+  const earthMaterialFolder = materialFolder.addFolder("Earth");
+  const earthMaterialParams = { earthColor: earth.material.color.getHex() };
+  earthMaterialFolder.add(earth.material, "wireframe");
+  earthMaterialFolder
+    .addColor(earthMaterialParams, "earthColor")
+    .onChange((value) => earth.material.color.set(value));
+
+  // Luna.
+  const lunaMaterialFolder = materialFolder.addFolder("Luna");
+  const lunaMaterialParams = { lunaColor: luna.material.color.getHex() };
+  lunaMaterialFolder.add(luna.material, "wireframe");
+  lunaMaterialFolder
+    .addColor(lunaMaterialParams, "lunaColor")
+    .onChange((value) => luna.material.color.set(value));
+
+  // Mars.
+  const marsMaterialFolder = materialFolder.addFolder("Mars");
+  const marsMaterialParams = { marsColor: mars.material.color.getHex() };
+  marsMaterialFolder.add(mars.material, "wireframe");
+  marsMaterialFolder
+    .addColor(marsMaterialParams, "marsColor")
+    .onChange((value) => mars.material.color.set(value));
+
+  // Jupiter.
+  const jupiterMaterialFolder = materialFolder.addFolder("Jupiter");
+  const jupiterMaterialParams = {
+    jupiterColor: jupiter.material.color.getHex(),
+  };
+  jupiterMaterialFolder.add(jupiter.material, "wireframe");
+  jupiterMaterialFolder
+    .addColor(jupiterMaterialParams, "jupiterColor")
+    .onChange((value) => jupiter.material.color.set(value));
+
+  // Saturn.
+  const saturnMaterialFolder = materialFolder.addFolder("Saturn");
+  const saturnMaterialParams = { saturnColor: saturn.material.color.getHex() };
+  saturnMaterialFolder.add(saturn.material, "wireframe");
+  saturnMaterialFolder
+    .addColor(saturnMaterialParams, "saturnColor")
+    .onChange((value) => saturn.material.color.set(value));
+
+  // Uranus.
+  const uranusMaterialFolder = materialFolder.addFolder("Uranus");
+  const uranusMaterialParams = { uranusColor: uranus.material.color.getHex() };
+  uranusMaterialFolder.add(uranus.material, "wireframe");
+  uranusMaterialFolder
+    .addColor(uranusMaterialParams, "uranusColor")
+    .onChange((value) => uranus.material.color.set(value));
+
+  // Neptune.
+  const neptuneMaterialFolder = materialFolder.addFolder("Neptune");
+  const neptuneMaterialParams = {
+    neptuneColor: neptune.material.color.getHex(),
+  };
+  neptuneMaterialFolder.add(neptune.material, "wireframe");
+  neptuneMaterialFolder
+    .addColor(neptuneMaterialParams, "neptuneColor")
+    .onChange((value) => neptune.material.color.set(value));
+
+  ///////////////////////////////////////////////////////////////////////////
 
   let clock = new THREE.Clock();
 
@@ -758,7 +986,7 @@ window.addEventListener("mousemove", (e) => {
     controls.update();
     renderer.render(scene, camera);
 
-/*   
+    /*   
     // Rotate each ring by a value that depends on the mouse position.
     // Take 95% of the previous value stored in 'x' and add 5% of mouse
     // position along the Y axis.
@@ -778,7 +1006,6 @@ window.addEventListener("mousemove", (e) => {
     renderer.render(ringScene, ringsCamera);
     renderer.autoClear = true;
 */
-    
   });
 })();
 

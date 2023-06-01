@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "animejs": "^3.2.1",
+    "dat.gui": "^0.7.9",
     "three": "^0.151.3"
   },
   "devDependencies": {

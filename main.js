@@ -27,7 +27,7 @@ const constant = {
   VERTEX_POINTS: 3, // number of points in a vertex
   LOWER: 0, // lower limit for planetary geometry controls
   UPPER: 2, // upper limit for planetary geometry controls
-}
+};
 
 // Create a new scene.
 const scene = new THREE.Scene();
@@ -64,12 +64,15 @@ const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
 
 // Each star is made up of a vertex. The array holds three values (as X,Y,Z
 // coordinates) per vertex.
-const vertices = new Float32Array(constant.PARTICLE_COUNT * constant.VERTEX_POINTS);
+const vertices = new Float32Array(
+  constant.PARTICLE_COUNT * constant.VERTEX_POINTS
+);
 
 // Loop through all vertices and randomize their positions.
 // Also, centre starfield and disperse across entire screen.
 for (let i = 0; i < constant.PARTICLE_COUNT * constant.VERTEX_POINTS; ++i) {
-  vertices[i] = (Math.random() - 0.5) * (Math.random() * constant.DISPERSION_FACTOR);
+  vertices[i] =
+    (Math.random() - 0.5) * (Math.random() * constant.DISPERSION_FACTOR);
 }
 
 // Geometry for stars.
@@ -94,21 +97,6 @@ const particleMaterial = new THREE.PointsMaterial({
 // Mesh for stars.
 const particleMesh = new THREE.Points(particleGeometry, particleMaterial);
 scene.add(particleMesh);
-
-/* 
-//
-// Rings
-//
-
-const ringScene = new THREE.Scene();
-const ringsCamera = new THREE.PerspectiveCamera(
-  50,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
-ringsCamera.position.set(0, 0, 20); 
-*/
 
 //
 // Audio
@@ -227,61 +215,6 @@ window.addEventListener("mousemove", (e) => {
     .setDataType(THREE.FloatType)
     .loadAsync("assets/hdri/abandoned_construction_4k.hdr");
   let envMap = pmrem.fromEquirectangular(envmapTexture).texture;
-
-  /*
-  // Rings.
-  const ring1 = new THREE.Mesh(
-    new THREE.RingGeometry(15, 13.5, 80, 1, 0),
-    new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0xFFC_B8E)
-        .convertSRGBToLinear()
-        .multiplyScalar(200),
-      roughness: 0.25,
-      envMap,
-      envMapIntensity: 1.8,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.35,
-    })
-  );
-
-  // Change opacity of rings when doing night/day transition.
-  ring1.sunOpacity = 0.35;
-  ring1.moonOpacity = 0.03;
-  ringScene.add(ring1);
-
-  const ring2 = new THREE.Mesh(
-    new THREE.RingGeometry(16.5, 15.75, 80, 1, 0),
-    new THREE.MeshBasicMaterial({
-      color: new THREE.Color(0xFFC_B8E).convertSRGBToLinear(),
-      transparent: true,
-      opacity: 0.5,
-      side: THREE.DoubleSide,
-    })
-  );
-
-  // Change opacity of rings when doing night/day transition.
-  ring2.sunOpacity = 0.35;
-  ring2.moonOpacity = 0.1;
-  ringScene.add(ring2);
-
-  const ring3 = new THREE.Mesh(
-    new THREE.RingGeometry(18, 17.75, 80),
-    new THREE.MeshBasicMaterial({
-      color: new THREE.Color(0xFFC_B8E)
-        .convertSRGBToLinear()
-        .multiplyScalar(50),
-      transparent: true,
-      opacity: 0.5,
-      side: THREE.DoubleSide,
-    })
-  );
-
-  // Change opacity of rings when doing night/day transition.
-  ring3.sunOpacity = 0.35;
-  ring3.moonOpacity = 0.03;
-  ringScene.add(ring3); 
-*/
 
   //
   // Planetary textures.
@@ -639,24 +572,48 @@ window.addEventListener("mousemove", (e) => {
     .name("Mercury Z Axis");
 
   // Venus.
-  rotationFolder.add(venus.rotation, "x", constant.LOWER, Math.PI).name("Venus X Axis");
-  rotationFolder.add(venus.rotation, "y", constant.LOWER, Math.PI).name("Venus Y Axis");
-  rotationFolder.add(venus.rotation, "z", constant.LOWER, Math.PI).name("Venus Z Axis");
+  rotationFolder
+    .add(venus.rotation, "x", constant.LOWER, Math.PI)
+    .name("Venus X Axis");
+  rotationFolder
+    .add(venus.rotation, "y", constant.LOWER, Math.PI)
+    .name("Venus Y Axis");
+  rotationFolder
+    .add(venus.rotation, "z", constant.LOWER, Math.PI)
+    .name("Venus Z Axis");
 
   // Earth.
-  rotationFolder.add(earth.rotation, "x", constant.LOWER, Math.PI).name("Earth X Axis");
-  rotationFolder.add(earth.rotation, "y", constant.LOWER, Math.PI).name("Earth Y Axis");
-  rotationFolder.add(earth.rotation, "z", constant.LOWER, Math.PI).name("Earth Z Axis");
+  rotationFolder
+    .add(earth.rotation, "x", constant.LOWER, Math.PI)
+    .name("Earth X Axis");
+  rotationFolder
+    .add(earth.rotation, "y", constant.LOWER, Math.PI)
+    .name("Earth Y Axis");
+  rotationFolder
+    .add(earth.rotation, "z", constant.LOWER, Math.PI)
+    .name("Earth Z Axis");
 
   // Luna.
-  rotationFolder.add(luna.rotation, "x", constant.LOWER, Math.PI).name("Luna X Axis");
-  rotationFolder.add(luna.rotation, "y", constant.LOWER, Math.PI).name("Luna Y Axis");
-  rotationFolder.add(luna.rotation, "z", constant.LOWER, Math.PI).name("Luna Z Axis");
+  rotationFolder
+    .add(luna.rotation, "x", constant.LOWER, Math.PI)
+    .name("Luna X Axis");
+  rotationFolder
+    .add(luna.rotation, "y", constant.LOWER, Math.PI)
+    .name("Luna Y Axis");
+  rotationFolder
+    .add(luna.rotation, "z", constant.LOWER, Math.PI)
+    .name("Luna Z Axis");
 
   // Mars.
-  rotationFolder.add(mars.rotation, "x", constant.LOWER, Math.PI).name("Mars X Axis");
-  rotationFolder.add(mars.rotation, "y", constant.LOWER, Math.PI).name("Mars Y Axis");
-  rotationFolder.add(mars.rotation, "z", constant.LOWER, Math.PI).name("Mars Z Axis");
+  rotationFolder
+    .add(mars.rotation, "x", constant.LOWER, Math.PI)
+    .name("Mars X Axis");
+  rotationFolder
+    .add(mars.rotation, "y", constant.LOWER, Math.PI)
+    .name("Mars Y Axis");
+  rotationFolder
+    .add(mars.rotation, "z", constant.LOWER, Math.PI)
+    .name("Mars Z Axis");
 
   // Jupiter.
   rotationFolder
@@ -706,49 +663,103 @@ window.addEventListener("mousemove", (e) => {
   const scaleFolder = geometryFolder.addFolder("Planetary Scale");
 
   // Mercury.
-  scaleFolder.add(mercury.scale, "x", constant.LOWER, constant.UPPER).name("Mercury X Axis");
-  scaleFolder.add(mercury.scale, "y", constant.LOWER, constant.UPPER).name("Mercury Y Axis");
-  scaleFolder.add(mercury.scale, "z", constant.LOWER, constant.UPPER).name("Mercury Z Axis");
+  scaleFolder
+    .add(mercury.scale, "x", constant.LOWER, constant.UPPER)
+    .name("Mercury X Axis");
+  scaleFolder
+    .add(mercury.scale, "y", constant.LOWER, constant.UPPER)
+    .name("Mercury Y Axis");
+  scaleFolder
+    .add(mercury.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Mercury Z Axis");
 
   // Venus.
-  scaleFolder.add(venus.scale, "x", constant.LOWER, constant.UPPER).name("Venus X Axis");
-  scaleFolder.add(venus.scale, "y", constant.LOWER, constant.UPPER).name("Venus Y Axis");
-  scaleFolder.add(venus.scale, "z", constant.LOWER, constant.UPPER).name("Venus Z Axis");
+  scaleFolder
+    .add(venus.scale, "x", constant.LOWER, constant.UPPER)
+    .name("Venus X Axis");
+  scaleFolder
+    .add(venus.scale, "y", constant.LOWER, constant.UPPER)
+    .name("Venus Y Axis");
+  scaleFolder
+    .add(venus.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Venus Z Axis");
 
   // Earth.
-  scaleFolder.add(earth.scale, "x", constant.LOWER, constant.UPPER).name("Earth X Axis");
-  scaleFolder.add(earth.scale, "y", constant.LOWER, constant.UPPER).name("Earth Y Axis");
-  scaleFolder.add(earth.scale, "z", constant.LOWER, constant.UPPER).name("Earth Z Axis");
+  scaleFolder
+    .add(earth.scale, "x", constant.LOWER, constant.UPPER)
+    .name("Earth X Axis");
+  scaleFolder
+    .add(earth.scale, "y", constant.LOWER, constant.UPPER)
+    .name("Earth Y Axis");
+  scaleFolder
+    .add(earth.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Earth Z Axis");
 
   // Luna.
-  scaleFolder.add(luna.scale, "x", constant.LOWER, constant.UPPER).name("Luna X Axis");
-  scaleFolder.add(luna.scale, "y", constant.LOWER, constant.UPPER).name("Luna Y Axis");
-  scaleFolder.add(luna.scale, "z", constant.LOWER, constant.UPPER).name("Luna Z Axis");
+  scaleFolder
+    .add(luna.scale, "x", constant.LOWER, constant.UPPER)
+    .name("Luna X Axis");
+  scaleFolder
+    .add(luna.scale, "y", constant.LOWER, constant.UPPER)
+    .name("Luna Y Axis");
+  scaleFolder
+    .add(luna.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Luna Z Axis");
 
   // Mars.
-  scaleFolder.add(mars.scale, "x", constant.LOWER, constant.UPPER).name("Mars X Axis");
-  scaleFolder.add(mars.scale, "y", constant.LOWER, constant.UPPER).name("Mars Y Axis");
-  scaleFolder.add(mars.scale, "z", constant.LOWER, constant.UPPER).name("Mars Z Axis");
+  scaleFolder
+    .add(mars.scale, "x", constant.LOWER, constant.UPPER)
+    .name("Mars X Axis");
+  scaleFolder
+    .add(mars.scale, "y", constant.LOWER, constant.UPPER)
+    .name("Mars Y Axis");
+  scaleFolder
+    .add(mars.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Mars Z Axis");
 
   // Jupiter.
-  scaleFolder.add(jupiter.scale, "x", constant.LOWER, constant.UPPER).name("Jupiter X Axis");
-  scaleFolder.add(jupiter.scale, "y", constant.LOWER, constant.UPPER).name("Jupiter Y Axis");
-  scaleFolder.add(jupiter.scale, "z", constant.LOWER, constant.UPPER).name("Jupiter Z Axis");
+  scaleFolder
+    .add(jupiter.scale, "x", constant.LOWER, constant.UPPER)
+    .name("Jupiter X Axis");
+  scaleFolder
+    .add(jupiter.scale, "y", constant.LOWER, constant.UPPER)
+    .name("Jupiter Y Axis");
+  scaleFolder
+    .add(jupiter.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Jupiter Z Axis");
 
   // Saturn.
-  scaleFolder.add(saturn.scale, "x", constant.LOWER, constant.UPPER).name("Saturn X Axis");
-  scaleFolder.add(saturn.scale, "y", constant.LOWER, constant.UPPER).name("Saturn Y Axis");
-  scaleFolder.add(saturn.scale, "z", constant.LOWER, constant.UPPER).name("Saturn Z Axis");
+  scaleFolder
+    .add(saturn.scale, "x", constant.LOWER, constant.UPPER)
+    .name("Saturn X Axis");
+  scaleFolder
+    .add(saturn.scale, "y", constant.LOWER, constant.UPPER)
+    .name("Saturn Y Axis");
+  scaleFolder
+    .add(saturn.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Saturn Z Axis");
 
   // Uranus.
-  scaleFolder.add(uranus.scale, "x", constant.LOWER, constant.UPPER).name("Uranus X Axis");
-  scaleFolder.add(uranus.scale, "y", constant.LOWER, constant.UPPER).name("Uranus Y Axis");
-  scaleFolder.add(uranus.scale, "z", constant.LOWER, constant.UPPER).name("Uranus Z Axis");
+  scaleFolder
+    .add(uranus.scale, "x", constant.LOWER, constant.UPPER)
+    .name("Uranus X Axis");
+  scaleFolder
+    .add(uranus.scale, "y", constant.LOWER, constant.UPPER)
+    .name("Uranus Y Axis");
+  scaleFolder
+    .add(uranus.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Uranus Z Axis");
 
   // Neptune.
-  scaleFolder.add(neptune.scale, "x", constant.LOWER, constant.UPPER).name("Neptune X Axis");
-  scaleFolder.add(neptune.scale, "y", constant.LOWER, constant.UPPER).name("Neptune Y Axis");
-  scaleFolder.add(neptune.scale, "z", constant.LOWER, constant.UPPER).name("Neptune Z Axis");
+  scaleFolder
+    .add(neptune.scale, "x", constant.LOWER, constant.UPPER)
+    .name("Neptune X Axis");
+  scaleFolder
+    .add(neptune.scale, "y", constant.LOWER, constant.UPPER)
+    .name("Neptune Y Axis");
+  scaleFolder
+    .add(neptune.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Neptune Z Axis");
 
   // Create a folder to house planetary material controls.
   const materialFolder = gui.addFolder("Planetary Material");
@@ -858,7 +869,10 @@ window.addEventListener("mousemove", (e) => {
     // screen-edge and it's nighttime.
 
     let anim = undefined;
-    if (event.clientX > window.innerWidth - constant.PIXELS_RIGHT_EDGE && !daytime) {
+    if (
+      event.clientX > window.innerWidth - constant.PIXELS_RIGHT_EDGE &&
+      !daytime
+    ) {
       anim = [1, 0]; // become daytime
     } else if (event.clientX < constant.PIXELS_LEFT_EDGE && daytime) {
       anim = [0, 1]; // become nighttime
@@ -895,15 +909,14 @@ window.addEventListener("mousemove", (e) => {
         // meshes.
         scene.children.forEach((child) => {
           child.traverse((object) => {
-            /* 
-               We want to gradually change the intensity from 1 to 2.
-               We adopt the following scheme, where t == level of transparency:
+            //  We want to gradually change the intensity from 1 to 2.
+            //  We adopt the following scheme, where t == level of transparency:
+            //
+            //  1 * (1-t) + 2 * t
+            //  1 * (1-0) + 2 * 0     = 1    <-- value at the animation's start
+            //  1 * (1-0.5) + 2 * 0.5 = 1.5  <-- value at the animation's midpoint
+            //  1 * (1-1) + 2 * 1     = 2    <-- value at the animation's end
 
-               1 * (1-t) + 2 * t
-               1 * (1-0) + 2 * 0     = 1    <-- value at the animation's start
-               1 * (1-0.5) + 2 * 0.5 = 1.5  <-- value at the animation's midpoint
-               1 * (1-1) + 2 * 1     = 2    <-- value at the animation's end
-            */
             if (object instanceof THREE.Mesh && object.material.envMap) {
               object.material.envMapIntensity =
                 object.sunEnvIntensity * // we want this intensity at the start
@@ -966,7 +979,6 @@ window.addEventListener("mousemove", (e) => {
 
       // How much we've rotated the plane.
       planeData.rotation += delta * 0.25;
-      /*planeData.rot += delta * 0; // freeze plane*/
 
       // Rotate plane along a random axis by a random rotation.
       plane.rotateOnAxis(planeData.randomAxis, planeData.randomAxisRot);
@@ -987,27 +999,6 @@ window.addEventListener("mousemove", (e) => {
 
     controls.update();
     renderer.render(scene, camera);
-
-    /*   
-    // Rotate each ring by a value that depends on the mouse position.
-    // Take 95% of the previous value stored in 'x' and add 5% of mouse
-    // position along the Y axis.
-    // The rightmost value dictates strength of rotation (bigger number: more rotation).
-
-    ring1.rotation.x = ring1.rotation.x * 0.95 + mousePos.y * 0.05 * 1.2;
-    ring1.rotation.y = ring1.rotation.y * 0.95 + mousePos.x * 0.05 * 1.2;
-
-    ring2.rotation.x = ring2.rotation.x * 0.95 + mousePos.y * 0.05 * 0.375;
-    ring2.rotation.y = ring2.rotation.y * 0.95 + mousePos.x * 0.05 * 0.375;
-
-    // Rotate this ring in the opposite direction to the others.
-    ring3.rotation.x = ring3.rotation.x * 0.95 - mousePos.y * 0.05 * 0.275;
-    ring3.rotation.y = ring3.rotation.y * 0.95 - mousePos.x * 0.05 * 0.275;
-
-    renderer.autoClear = false; // don't clear screen before next render
-    renderer.render(ringScene, ringsCamera);
-    renderer.autoClear = true;
-*/
   });
 })();
 
@@ -1122,7 +1113,7 @@ function makePlane(planeMesh, trailTexture, envMap, scene) {
   // the Y axis. The returned object gets stored in the planesData array.
   return {
     group,
-    // Set rotation between 0°-360°: 2πr circum. of a circle).
+    // Set rotation between 0°-360°: 2πr is the circumference of a circle).
     rotation: Math.random() * Math.PI * 2.0,
     radius: Math.random() * Math.PI * 0.45 + constant.MINIMUM_RADIUS,
     yOffset: Math.random() * 1.0 + 10.5,

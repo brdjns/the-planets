@@ -1,4 +1,5 @@
 # .gitignore: Ignore unwanted files.
+# SPDX-License-Identifier: MIT
 
 # WSL stuff.
 *.Identifier

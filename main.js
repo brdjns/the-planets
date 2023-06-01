@@ -90,7 +90,7 @@ const particleMaterial = new THREE.PointsMaterial({
   map: particleTexture,
   size: 2, // star size
   sizeAttenuation: true, // star size reduces with camera distance
-  color: 0xfff_fff, // same as daytime background
+  color: 0xFFF_FFF, // same as daytime background
   transparent: true,
 });
 
@@ -166,7 +166,7 @@ controls.dampingFactor = constant.DAMP_FACTOR;
 controls.enableDamping = true; // inertia!
 
 // Sunlight properties.
-const sunLight = new THREE.DirectionalLight(new THREE.Color("#ffffff"), 3.5);
+const sunLight = new THREE.DirectionalLight(new THREE.Color(0xFFF_FFF), 3.5);
 sunLight.position.set(10, 20, 10); // position on top right-hand side of the screen
 sunLight.castShadow = true;
 sunLight.shadow.mapSize.width = 512;
@@ -181,7 +181,7 @@ scene.add(sunLight);
 
 // Moonlight properties.
 const moonLight = new THREE.DirectionalLight(
-  new THREE.Color(0xfff_fff).convertLinearToSRGB(),
+  new THREE.Color(0xFFF_FFF).convertLinearToSRGB(),
   0
 );
 moonLight.position.set(-10, 20, 10); // position on top left-hand side of the screen
@@ -328,7 +328,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0, // environmental map effect strength
       sheen: 1.4,
       sheenRoughness: 0.8,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -355,7 +355,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0, // environmental map effect strength
       sheen: 0.4,
       sheenRoughness: 1.0,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -376,7 +376,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0, // environmental map effect strength
       sheen: 0.4,
       sheenRoughness: 1.0,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -395,7 +395,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 1.4,
       sheenRoughness: 0.4,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -414,7 +414,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -433,7 +433,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -452,7 +452,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -476,7 +476,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.2,
       transparent: true,
       opacity: 0.4,
@@ -496,7 +496,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -517,7 +517,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.2,
       transparent: true,
       opacity: 0.3,
@@ -537,7 +537,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
       clearcoat: 0.4,
     })
   );

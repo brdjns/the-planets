@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { Stats } from "three/examples/jsm/libs/stats.module.js";
 import anime from "animejs/lib/anime.es.js";
 
 // Animate backgrounds.
@@ -158,8 +159,12 @@ renderer.useLegacyLights = false;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+// Display statistics.
+let stats = new Stats();
+
 // Append to the document.
 document.body.appendChild(renderer.domElement);
+document.body.appendChild(stats.dom);
 
 // Add controls.
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -610,6 +615,9 @@ window.addEventListener("mousemove", (e) => {
     if (animating) {
       return; // do nothing if animation still ongoing
     }
+
+    // Update statistics.
+    stats.update();
 
     // Go from daytime to nighttime and back by swapping the transparency
     // array.

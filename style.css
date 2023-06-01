@@ -17,7 +17,7 @@ body {
   width: 100%;
   height: 100%;
   /* Fall back on a default if the custom cursor doesn't load. */
-  cursor: url('/assets/images/spacepointer.svg'), auto;
+  cursor: url("/assets/images/spacepointer.svg"), auto;
 }
 
 /* Background for daytime. */
@@ -41,4 +41,27 @@ body {
 canvas {
   position: fixed;
   margin: 0;
+}
+
+/* Site information. */
+#info {
+  font-family: "Space Grotesk", "Aktiv Grotesk", "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: .75em;
+  background-color: transparent;
+  color: hsl(24, 17%, 60%);
+  -webkit-text-stroke: hsl(0, 0%, 0%);
+	position: absolute;
+	bottom: 0px;
+  right: 0px;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	text-align: right;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	z-index: 1;
 }

@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { Stats } from "three/examples/jsm/libs/stats.module.js";
+import Stats from "three/examples/jsm/libs/stats.module.js";
 import anime from "animejs/lib/anime.es.js";
 
 // Animate backgrounds.

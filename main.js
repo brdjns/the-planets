@@ -121,7 +121,7 @@ scene.add(sound);
 const loader = new THREE.AudioLoader(); // load all sound files
 
 // Load the plane sound.
-loader.load("assets/audio/prop_plane.mp3", (buffer) => {
+loader.load("assets/audio/einfluss.ogg", (buffer) => {
   sound.setBuffer(buffer); // set source to sound object's buffer
   sound.setVolume(1); // set the volume (range is 0:1)
   sound.setLoop(true); // always loop

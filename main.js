@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { GUI } from "dat.gui";
+import * as DAT from "dat.gui";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 import anime from "animejs/lib/anime.es.js";
 
@@ -548,7 +548,7 @@ window.addEventListener("mousemove", (e) => {
   //
 
   // Initialise the GUI.
-  const gui = new GUI();
+  const gui = new DAT.GUI();
 
   // Create a folder to hold geometry controls.
   const geometryFolder = gui.addFolder("Planetary Geometry");
@@ -842,6 +842,19 @@ window.addEventListener("mousemove", (e) => {
   neptuneMaterialFolder
     .addColor(neptuneMaterialParams, "neptuneColor")
     .onChange((value) => neptune.material.color.set(value));
+
+  // Create a folder to house camera controls.
+  const cameraFolder = gui.addFolder("Planetary Camera");
+
+  cameraFolder
+    .add(camera.position, "x", constant.LOWER, 10_000)
+    .name("X Axis");
+  cameraFolder
+    .add(camera.position, "y", constant.LOWER, 10_000)
+    .name("Y Axis");
+  cameraFolder
+    .add(camera.position, "z", constant.LOWER, 10_000)
+    .name("Z Axis");
 
   ///////////////////////////////////////////////////////////////////////////
 

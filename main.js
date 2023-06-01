@@ -552,7 +552,6 @@ window.addEventListener("mousemove", (e) => {
 
   // Create a folder to hold geometry controls.
   const geometryFolder = gui.addFolder("Planetary Geometry");
-  geometryFolder.open();
 
   // Create a subfolder to house planetary rotation controls.
   const rotationFolder = geometryFolder.addFolder("Planetary Rotation");

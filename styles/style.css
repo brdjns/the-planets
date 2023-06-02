@@ -3,8 +3,8 @@
 
 :root {
   /* Daytime colour gradients. */
-  --day-grad-1: hsl(38, 100%, 81%);
-  --day-grad-2: hsl(42, 89%, 93%);
+  --day-grad-1: hsl(38, 75%, 76%);
+  --day-grad-2: hsl(315, 89%, 93%);
 
   /* Nighttime colour gradients. */
   --nite-grad-1: hsl(64, 59%, 11%);

@@ -20,8 +20,8 @@ const constant = {
   // Screen geometry.
   MOUSE_Y_OFFSET: 0.0003, // offset for mouse position on Y axis
   MOUSE_X_OFFSET: 0.0003, // offset for mouse position on X axis
-  PIXELS_LEFT_EDGE: 200, // number of pixels from left screen edge
-  PIXELS_RIGHT_EDGE: 200, // number of pixels from right screen edge
+  PIXELS_LEFT_EDGE: 10, // number of pixels from left screen edge
+  PIXELS_RIGHT_EDGE: 10, // number of pixels from right screen edge
 
   // Controls.
   DAMP_FACTOR: 0.05, // control damping factor

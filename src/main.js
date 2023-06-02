@@ -61,19 +61,6 @@ camera.position.set(902, -946, -732);
 // Starfield.
 //
 
-/*
-// Load a textured skybox as a background.
-const skyLoader = new THREE.CubeTextureLoader();
-scene.background = skyLoader.load([
-  "assets/images/starfield.png",
-  "assets/images/starfield.png",
-  "assets/images/starfield.png",
-  "assets/images/starfield.png",
-  "assets/images/starfield.png",
-  "assets/images/starfield.png",
-]);
-*/
-
 const particleGeometry = new THREE.BufferGeometry(); // geometry for stars
 
 // Each star is made up of a vertex. The array holds three values (as X,Y,Z

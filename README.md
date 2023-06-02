@@ -1,11 +1,11 @@
 # The Planets
 
 The Planets is an imaginative simulation of the Solar System using
-[https://threejs.org/](Three.js) and [https://animejs.com/](Anime.js).
+[Three.js](https://threejs.org/) and [Anime.js](https://animejs.com/).
 
 ## Installation
 
-All that's needed is [https://nodejs.org/](Node) and [https://vitejs.dev/](Vite).
+All that's needed is [Node](https://nodejs.org/) and [Vite](https://vitejs.dev/).
 All the site's dependencies are included so you shouldn't have to do anything
 much.
 

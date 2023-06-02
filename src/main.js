@@ -677,7 +677,7 @@ window.addEventListener("mousemove", (e) => {
     .add(neptune.rotation, "z", constant.LOWER, Math.PI)
     .name("Neptune Z Axis");
 
-  // Create a foler to house planetary scale controls.
+  // Create a folder to house planetary scale controls.
   const scaleFolder = geometryFolder.addFolder("Planetary Scale");
 
   // Mercury.
@@ -777,6 +777,108 @@ window.addEventListener("mousemove", (e) => {
     .name("Neptune Y Axis");
   scaleFolder
     .add(neptune.scale, "z", constant.LOWER, constant.UPPER)
+    .name("Neptune Z Axis");
+
+  // Create a subfolder to house planetary position controls.
+  const positionFolder = geometryFolder.addFolder("Planetary Position");
+
+  // Mercury.
+  positionFolder
+    .add(mercury.position, "x", constant.LOWER, 10_000)
+    .name("Mercury X Axis");
+  positionFolder
+    .add(mercury.position, "y", constant.LOWER, 10_000)
+    .name("Mercury Y Axis");
+  positionFolder
+    .add(mercury.position, "z", constant.LOWER, 10_000)
+    .name("Mercury Z Axis");
+
+  // Venus.
+  positionFolder
+    .add(venus.position, "x", constant.LOWER, 10_000)
+    .name("Venus X Axis");
+  positionFolder
+    .add(venus.position, "y", constant.LOWER, 10_000)
+    .name("Venus Y Axis");
+  positionFolder
+    .add(venus.position, "z", constant.LOWER, 10_000)
+    .name("Venus Z Axis");
+
+  // Earth.
+  positionFolder
+    .add(earth.position, "x", constant.LOWER, 10_000)
+    .name("Earth X Axis");
+  positionFolder
+    .add(earth.position, "y", constant.LOWER, 10_000)
+    .name("Earth Y Axis");
+  positionFolder
+    .add(earth.position, "z", constant.LOWER, 10_000)
+    .name("Earth Z Axis");
+
+  // Luna.
+  positionFolder
+    .add(luna.position, "x", constant.LOWER, 10_000)
+    .name("Luna X Axis");
+  positionFolder
+    .add(luna.position, "y", constant.LOWER, 10_000)
+    .name("Luna Y Axis");
+  positionFolder
+    .add(luna.position, "z", constant.LOWER, 10_000)
+    .name("Luna Z Axis");
+
+  // Mars.
+  positionFolder
+    .add(mars.position, "x", constant.LOWER, 10_000)
+    .name("Mars X Axis");
+  positionFolder
+    .add(mars.position, "y", constant.LOWER, 10_000)
+    .name("Mars Y Axis");
+  positionFolder
+    .add(mars.position, "z", constant.LOWER, 10_000)
+    .name("Mars Z Axis");
+
+  // Jupiter.
+  positionFolder
+    .add(jupiter.position, "x", constant.LOWER, 10_000)
+    .name("Jupiter X Axis");
+  positionFolder
+    .add(jupiter.position, "y", constant.LOWER, 10_000)
+    .name("Jupiter Y Axis");
+  positionFolder
+    .add(jupiter.position, "z", constant.LOWER, 10_000)
+    .name("Jupiter Z Axis");
+
+  // Saturn.
+  positionFolder
+    .add(saturn.position, "x", constant.LOWER, 10_000)
+    .name("Saturn X Axis");
+  positionFolder
+    .add(saturn.position, "y", constant.LOWER, 10_000)
+    .name("Saturn Y Axis");
+  positionFolder
+    .add(saturn.position, "z", constant.LOWER, 10_000)
+    .name("Saturn Z Axis");
+
+  // Uranus.
+  positionFolder
+    .add(uranus.position, "x", constant.LOWER, 10_000)
+    .name("Uranus X Axis");
+  positionFolder
+    .add(uranus.position, "y", constant.LOWER, 10_000)
+    .name("Uranus Y Axis");
+  positionFolder
+    .add(uranus.position, "z", constant.LOWER, 10_000)
+    .name("Uranus Z Axis");
+
+  // Neptune.
+  positionFolder
+    .add(neptune.position, "x", constant.LOWER, 10_000)
+    .name("Neptune X Axis");
+  positionFolder
+    .add(neptune.position, "y", constant.LOWER, 10_000)
+    .name("Neptune Y Axis");
+  positionFolder
+    .add(neptune.position, "z", constant.LOWER, 10_000)
     .name("Neptune Z Axis");
 
   // Create a folder to house planetary material controls.

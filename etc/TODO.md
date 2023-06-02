@@ -12,3 +12,4 @@
 * Split JavaScript into multiple files for modularity
 * Extract code into functions for modularity
 * Reorganise assets directory into subdirectories
+* ~~Add planetary position controls~~

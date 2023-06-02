@@ -41,6 +41,9 @@ const constant = {
   SATURN_OFFSET: 2.3,
   URANUS_OFFSET: 1.4,
   NEPTUNE_OFFSET: 1.5,
+
+  // Lighting.
+  TRANSITION_DURATION: 1500 // duration of day/night transition
 };
 
 // Create a new scene.
@@ -121,7 +124,7 @@ const sound = new THREE.Audio(listener); // create sound source
 scene.add(sound);
 const loader = new THREE.AudioLoader(); // load all sound files
 
-// Load the plane sound.
+// Load background music.
 loader.load("assets/audio/einfluss.ogg", (buffer) => {
   sound.setBuffer(buffer); // set source to sound object's buffer
   sound.setVolume(1); // set the volume (range is 0:1)
@@ -1036,7 +1039,7 @@ window.addEventListener("mousemove", (e) => {
         moonBackground.style.opacity = obj.t;
       },
       easing: "easeOutElastic(3, 0.7)", // https://animejs.com/documentation/#elasticEasing
-      duration: 1500,
+      duration: constant.TRANSITION_DURATION,
     });
   });
 

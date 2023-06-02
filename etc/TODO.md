@@ -2,7 +2,7 @@
 
 * Get rid of magic constants, especially for hex colour codes
 * ~~Add a licence~~
-* Flesh out the README
+* ~~Flesh out the README~~
 * ~~Remove plane sound~~
 * ~~Add background music~~
 * ~~Add skybox~~

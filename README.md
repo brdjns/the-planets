@@ -7,9 +7,13 @@ The Planets is an imaginative simulation of the Solar System using
 
 All that's needed is [Node](https://nodejs.org/) and [Vite](https://vitejs.dev/).
 All the site's dependencies are included so you shouldn't have to do anything
-much.
+much. But if things go haywire:
 
-After cloning, simply run:
+```sh
+npm install
+```
+
+Then simply run:
 
 ```sh
 npx vite

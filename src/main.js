@@ -16,17 +16,32 @@ let moonBackground = document.querySelector(".moon-background");
 // Constants.
 const constant = {
   MINIMUM_RADIUS: 0.2, // minimum radius for a plane to circle
-  ROTATIONAL_SPEED: 0.002, // speed of planetary axial rotation
+
+  // Screen geometry.
   MOUSE_Y_OFFSET: 0.0003, // offset for mouse position on Y axis
   MOUSE_X_OFFSET: 0.0003, // offset for mouse position on X axis
-  DAMP_FACTOR: 0.05, // control damping factor
   PIXELS_LEFT_EDGE: 200, // number of pixels from left screen edge
   PIXELS_RIGHT_EDGE: 200, // number of pixels from right screen edge
+
+  // Controls.
+  DAMP_FACTOR: 0.05, // control damping factor
+  LOWER: 0, // lower limit for planetary geometry controls
+  UPPER: 2, // upper limit for planetary geometry controls
+
+  // Star rendering.
   DISPERSION_FACTOR: 10_000, // factor of 10 used to disperse starfield
   PARTICLE_COUNT: 1_000_000, // number of stars to generate (actual number is N/3)
   VERTEX_POINTS: 3, // number of points in a vertex
-  LOWER: 0, // lower limit for planetary geometry controls
-  UPPER: 2, // upper limit for planetary geometry controls
+
+  // Rotational speeds (including rotational speed offsets of planets relative
+  // to Earth's).
+  ROTATIONAL_SPEED: 0.002, // speed of Earth's planetary axial rotation
+  MERCURY_OFFSET: 1.6,
+  VENUS_OFFSET: 2.5,
+  JUPITER_OFFSET: 2.4,
+  SATURN_OFFSET: 2.3,
+  URANUS_OFFSET: 1.4,
+  NEPTUNE_OFFSET: 1.5,
 };
 
 // Create a new scene.
@@ -90,7 +105,7 @@ const particleMaterial = new THREE.PointsMaterial({
   map: particleTexture,
   size: 2, // star size
   sizeAttenuation: true, // star size reduces with camera distance
-  color: 0xFFF_FFF, // same as daytime background
+  color: 0xfff_fff, // same as daytime background
   transparent: true,
 });
 
@@ -166,7 +181,7 @@ controls.dampingFactor = constant.DAMP_FACTOR;
 controls.enableDamping = true; // inertia!
 
 // Sunlight properties.
-const sunLight = new THREE.DirectionalLight(new THREE.Color(0xFFF_FFF), 3.5);
+const sunLight = new THREE.DirectionalLight(new THREE.Color(0xfff_fff), 3.5);
 sunLight.position.set(10, 20, 10); // position on top right-hand side of the screen
 sunLight.castShadow = true;
 sunLight.shadow.mapSize.width = 512;
@@ -181,7 +196,7 @@ scene.add(sunLight);
 
 // Moonlight properties.
 const moonLight = new THREE.DirectionalLight(
-  new THREE.Color(0xFFF_FFF).convertLinearToSRGB(),
+  new THREE.Color(0xfff_fff).convertLinearToSRGB(),
   0
 );
 moonLight.position.set(-10, 20, 10); // position on top left-hand side of the screen
@@ -328,7 +343,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0, // environmental map effect strength
       sheen: 1.4,
       sheenRoughness: 0.8,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -355,7 +370,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0, // environmental map effect strength
       sheen: 0.4,
       sheenRoughness: 1.0,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -376,7 +391,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0, // environmental map effect strength
       sheen: 0.4,
       sheenRoughness: 1.0,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -395,7 +410,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 1.4,
       sheenRoughness: 0.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.5,
     })
   );
@@ -414,7 +429,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -433,7 +448,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -452,7 +467,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -476,7 +491,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
       transparent: true,
       opacity: 0.4,
@@ -496,7 +511,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
     })
   );
@@ -517,7 +532,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.2,
       transparent: true,
       opacity: 0.3,
@@ -537,7 +552,7 @@ window.addEventListener("mousemove", (e) => {
       envMapIntensity: 1.0,
       sheen: 0.2,
       sheenRoughness: 1.4,
-      sheenColor: new THREE.Color(0x696_E46).convertSRGBToLinear(),
+      sheenColor: new THREE.Color(0x696_e46).convertSRGBToLinear(),
       clearcoat: 0.4,
     })
   );
@@ -964,14 +979,14 @@ window.addEventListener("mousemove", (e) => {
     // We add to the Y axis if a planet rotates clockwise on its axis, and
     // subtract if a planet rotates counterclockwise.
 
-    earth.rotation.y += constant.ROTATIONAL_SPEED; // rotate Earth counterclockwise on its axis.
-    mercury.rotation.y += constant.ROTATIONAL_SPEED / 1.6;
-    venus.rotation.y -= constant.ROTATIONAL_SPEED / 2.5;
+    earth.rotation.y += constant.ROTATIONAL_SPEED;
+    mercury.rotation.y += constant.ROTATIONAL_SPEED / constant.MERCURY_OFFSET;
+    venus.rotation.y -= constant.ROTATIONAL_SPEED / constant.VENUS_OFFSET;
     mars.rotation.y += constant.ROTATIONAL_SPEED;
-    jupiter.rotation.y += constant.ROTATIONAL_SPEED * 2.4;
-    saturn.rotation.z += constant.ROTATIONAL_SPEED * 2.3;
-    uranus.rotation.z -= constant.ROTATIONAL_SPEED * 1.4;
-    neptune.rotation.y += constant.ROTATIONAL_SPEED * 1.5;
+    jupiter.rotation.y += constant.ROTATIONAL_SPEED * constant.JUPITER_OFFSET;
+    saturn.rotation.z += constant.ROTATIONAL_SPEED * constant.SATURN_OFFSET;
+    uranus.rotation.z -= constant.ROTATIONAL_SPEED * constant.URANUS_OFFSET;
+    neptune.rotation.y += constant.ROTATIONAL_SPEED * constant.NEPTUNE_OFFSET;
 
     // Reset the position + rotation of every group every time we rerender the
     // scene.

@@ -3,25 +3,38 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap"
     />
-    <link rel="icon" type="image/svg" href="./assets/images/favicon.svg" />
     <link rel="stylesheet" href="/styles/style.css" />
-    <title>Planes!</title>
+    <link rel="icon" type="image/svg" href="/assets/images/favicon.svg" />
+    <title>The Solar System</title>
   </head>
   <body>
-    <div id="info">
-      The Solar System<br />
-      zoom: mousewheel scroll/press+move ^ truck/track: rightmouse ^ arc:
-      leftmouse
-    </div>
+    <p class="copyright">
+      <img
+        src="./assets/images/rocketlogo.svg"
+        width="31.9315"
+        height="32.0105"
+      />
+      <strong class="title">The Solar System</strong><br />
+      <strong>zoom</strong>: mousewheel scroll/press+move
+      <strong>truck/track</strong>: right mouse button <strong>arc</strong>:
+      left mouse button<br />
+      <sup>
+        © 2023 Bradley Jones under the
+        <a href="https://brdjns.mit-license.org" title="Fork and hack!"
+          >MIT licence</a
+        >.
+      </sup>
+      <br />
+    </p>
     <script type="module" src="/src/main.js"></script>
     <div class="sun-background"></div>
     <div class="moon-background"></div>

@@ -9,6 +9,9 @@
   /* Nighttime colour gradients. */
   --nite-grad-1: hsl(64, 59%, 11%);
   --nite-grad-2: hsl(212, 43%, 40%);
+
+  /* Body text colour. */
+  --text-colour: hsl(24, 17%, 60%);
  }
 
 html,
@@ -38,30 +41,40 @@ body {
   opacity: 0;
 }
 
-canvas {
-  position: fixed;
-  margin: 0;
+/* Links. */
+a, a:visited, a:active {
+  color: var(--text-colour);
+  text-decoration-line: underline;
+  text-decoration-style: solid;
 }
 
-/* Site information. */
-#info {
+a:hover {
+  text-decoration-style: dashed;
+}
+
+/* Copyright information. */
+.copyright {
   font-family: "Space Grotesk", "Aktiv Grotesk", "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 400;
   font-size: .75em;
-  background-color: transparent;
-  color: hsl(24, 17%, 60%);
-  -webkit-text-stroke: hsl(0, 0%, 0%);
-	position: absolute;
-	bottom: 0px;
+  text-align: right;
+  color: var(--text-colour);
+  bottom: 0px;
   right: 0px;
-	width: 100%;
-	padding: 10px;
-	box-sizing: border-box;
-	text-align: right;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	pointer-events: none;
-	z-index: 1;
+  padding-right: 1%;
+  padding-bottom: 1%;
+  position: fixed;
+  background: transparent;
+  z-index: 1;
+}
+
+/* Site title. */
+.title {
+  font-weight: 700;
+  font-size: 1.3em;
+}
+
+canvas {
+  position: fixed;
+  margin: 0;
 }
